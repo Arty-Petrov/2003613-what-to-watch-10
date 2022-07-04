@@ -1,7 +1,7 @@
 # Личный проект «Что посмотреть»
 
 * Студент: [Артем Петров](https://up.htmlacademy.ru/react/10/user/2003613).
-* Наставник: `Неизвестно`.
+* Наставник: [Михаил Кислый](https://htmlacademy.ru/profile/smart-grizzly).
 
 ---
 
