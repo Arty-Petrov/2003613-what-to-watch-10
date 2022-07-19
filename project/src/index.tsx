@@ -11,7 +11,7 @@ const filmProps: Film = {
   id: 0,
   name: 'The Grand Budapest Hotel',
   posterImage: 'img/the-grand-budapest-hotel-poster.jpg',
-  previewImage: 'string',
+  previewImage: 'img/orlando.jpg',
   backgroundImage: 'img/bg-the-grand-budapest-hotel.jpg',
   backgroundColor: 'string',
   videoLink: 'string',

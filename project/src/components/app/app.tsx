@@ -1,4 +1,4 @@
-import CatalogScreen from '../../pages/catalog-screen/catalog-screen';
+import CatalogPage from '../../pages/catalog/catalog-page';
 import Film from '../../types/film';
 import User from '../../types/user';
 
@@ -10,7 +10,7 @@ type AppScreenProps = {
 
 function App({film, user, filmCardsCount,}: AppScreenProps): JSX.Element {
   return (
-    <CatalogScreen
+    <CatalogPage
       film = {film}
       user = {user}
       filmCardsCount={filmCardsCount}
