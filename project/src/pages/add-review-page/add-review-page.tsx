@@ -2,13 +2,23 @@ import Logo from '../../components/logo/logo';
 import UserBlock from '../../components/user-block/user-block';
 import User from '../../types/user';
 import Film from '../../types/film';
+import NotFoundPage from '../not-found-page/not-found-page';
+import { useParams } from 'react-router-dom';
 
 type ReviewPageProps = {
-  film: Film;
+  films: Film[];
   user: User;
 }
 
-function ReviewPage({film, user}: ReviewPageProps): JSX.Element {
+function AddReviewPage({films, user}: ReviewPageProps): JSX.Element {
+  const {id} = useParams();
+  const film = films.find((item) => item.id === Number(id));
+
+  if (!film){
+    return (
+      <NotFoundPage />
+    );
+  }
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">
@@ -94,4 +104,4 @@ function ReviewPage({film, user}: ReviewPageProps): JSX.Element {
   );
 }
 
-export default ReviewPage;
+export default AddReviewPage;

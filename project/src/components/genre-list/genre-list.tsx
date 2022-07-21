@@ -1,4 +1,4 @@
-import {Genres} from '../../util/enum';
+import {Genres} from '../../util/const';
 
 function GenreList(): JSX.Element {
   return (

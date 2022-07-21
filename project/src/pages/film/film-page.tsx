@@ -1,16 +1,18 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import SomeComp from '../../components/some-comp/some-comp';
-import FilmCard from '../../components/film-card/film-card';
+import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../util/const';
 import Film from '../../types/film';
 import User from '../../types/user';
+import SomeComp from '../../components/some-comp/some-comp';
+import FilmCard from '../../components/film-card/film-card';
 import Logo from '../../components/logo/logo';
 import UserBlock from '../../components/user-block/user-block';
 import FilmOverview from '../../components/film-overview/film-overview';
+import NotFoundPage from '../not-found-page/not-found-page';
 
 type FilmInfoProps = {
-  film: Film;
+  films: Film[];
   user: User;
-  filmCardsCount: number;
 }
 
 enum FilmInfoSection {
@@ -19,7 +21,17 @@ enum FilmInfoSection {
   Reviews = 'Reviews',
 }
 
-function FilmInfoPage({film, user, filmCardsCount}: FilmInfoProps): JSX.Element {
+function FilmPage({films, user}: FilmInfoProps): JSX.Element {
+  const {id} = useParams();
+  const film = films.find((item) => item.id === Number(id));
+  const linkStyle = {textDecoration: 'none'};
+
+  if (!film){
+    return (
+      <NotFoundPage />
+    );
+  }
+
   return (
     <>
       <SomeComp addElement={false}/>
@@ -46,20 +58,23 @@ function FilmInfoPage({film, user, filmCardsCount}: FilmInfoProps): JSX.Element 
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
+
+                <Link to={`${AppRoute.Player}/${film.id}`} className="btn btn--play film-card__button" >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
-                </button>
-                <button className="btn btn--list film-card__button" type="button">
+                </Link>
+
+                <Link to={`${AppRoute.MyList}`} className="btn btn--list film-card__button">
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
                   </svg>
-                  <span>My list</span>
+                  <span style={linkStyle}>My list</span>
                   <span className="film-card__count">9</span>
-                </button>
-                <a href="add-review.html" className="btn film-card__button">Add review</a>
+                </Link>
+
+                <Link to={`${film.id}${AppRoute.AddReview}`} className="btn film-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -75,13 +90,13 @@ function FilmInfoPage({film, user, filmCardsCount}: FilmInfoProps): JSX.Element 
               <nav className="film-nav film-card__nav">
                 <ul className="film-nav__list">
                   <li className="film-nav__item film-nav__item--active">
-                    <a href="#" className="film-nav__link">{FilmInfoSection.Overview}</a>
+                    <a href="/" className="film-nav__link">{FilmInfoSection.Overview}</a>
                   </li>
                   <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">{FilmInfoSection.Details}</a>
+                    <a href="/" className="film-nav__link">{FilmInfoSection.Details}</a>
                   </li>
                   <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">{FilmInfoSection.Reviews}</a>
+                    <a href="/" className="film-nav__link">{FilmInfoSection.Reviews}</a>
                   </li>
                 </ul>
               </nav>
@@ -98,7 +113,7 @@ function FilmInfoPage({film, user, filmCardsCount}: FilmInfoProps): JSX.Element 
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
           <div className="catalog__films-list">
-            { [...Array(filmCardsCount)].map((item) => <FilmCard film = {film} key = {item} />)}
+            {films.slice(0,3).map((item) => <FilmCard film = {item} key = {item.id} />)}
           </div>
         </section>
       </div>
@@ -106,4 +121,4 @@ function FilmInfoPage({film, user, filmCardsCount}: FilmInfoProps): JSX.Element 
   );
 }
 
-export default FilmInfoPage;
+export default FilmPage;

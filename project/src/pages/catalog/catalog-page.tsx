@@ -7,20 +7,24 @@ import GenreList from '../../components/genre-list/genre-list';
 import FilmCard from '../../components/film-card/film-card';
 import ShowMoreButton from '../../components/show-more-button/show-more-button';
 import Footer from '../../components/footer/footer';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../util/const';
 
 type CatalogProps = {
-  film: Film;
+  films: Film[];
+  promo: Film;
   user: User;
-  filmCardsCount: number;
 }
 
-function CatalogPage({film, user, filmCardsCount}: CatalogProps): JSX.Element {
+function CatalogPage(props: CatalogProps): JSX.Element {
+  const {films, promo, user, } = props;
+
   return (
     <>
       <SomeComp addElement={false} />
       <section className="film-card">
         <div className="film-card__bg">
-          <img src={film.backgroundImage} alt={film.name} />
+          <img src={promo.backgroundImage} alt={promo.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -33,30 +37,30 @@ function CatalogPage({film, user, filmCardsCount}: CatalogProps): JSX.Element {
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src={film.posterImage} alt={`${film.name} poster`} width="218" height="327" />
+              <img src={promo.posterImage} alt={`${promo.name} poster`} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{film.name}</h2>
+              <h2 className="film-card__title">{promo.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{film.genre}</span>
-                <span className="film-card__year">{film.released}</span>
+                <span className="film-card__genre">{promo.genre}</span>
+                <span className="film-card__year">{promo.released}</span>
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
+                <Link to={`${AppRoute.Player}/${promo.id}`} className="btn btn--play film-card__button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
-                </button>
-                <button className="btn btn--list film-card__button" type="button">
+                </Link>
+                <Link to={`${AppRoute.MyList}`} className="btn btn--list film-card__button">
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
                   </svg>
                   <span>My list</span>
                   <span className="film-card__count">9</span>
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -67,7 +71,7 @@ function CatalogPage({film, user, filmCardsCount}: CatalogProps): JSX.Element {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
           <GenreList />
           <div className="catalog__films-list">
-            { [...Array(filmCardsCount)].map((item) => <FilmCard film = {film} key = {item} />)}
+            {films.map((item) => <FilmCard film = {item} key = {item.id} />)}
           </div>
           <ShowMoreButton />
         </section>
