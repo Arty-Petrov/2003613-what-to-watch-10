@@ -1,7 +1,22 @@
 import Film from '../../types/film';
+import { useParams } from 'react-router-dom';
+import NotFoundPage from '../not-found-page/not-found-page';
 
-function PlayerPage (film: Film): JSX.Element {
+type PlayerPageProps = {
+  films: Film[];
+}
+
+function PlayerPage ({films}: PlayerPageProps): JSX.Element {
+  const {id} = useParams();
+  const film = films.find((item) => item.id === Number(id));
   const divStyle = {left: '30%'};
+
+  if (!film){
+    return (
+      <NotFoundPage />
+    );
+  }
+
   return (
     <div className="player">
       <video src="#" className="player__video" poster={film.posterImage}></video>
