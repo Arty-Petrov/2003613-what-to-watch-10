@@ -25,3 +25,46 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknow = 'UNKNOW',
 }
+
+export const FilmsCatalogState = {
+  Catalog: {
+    headText: 'Catalog',
+    headStyle: 'visually-hidden',
+    genreList: true,
+    moreButton: true,
+    filmsCount: 20,
+  },
+  MoreLikeThis: {
+    headText: 'More like this',
+    headStyle: 'catalog--like-this',
+    genreList: false,
+    moreButton: false,
+    filmsCount: 4,
+  },
+  MyList: {
+    headText: 'Catalog',
+    headStyle: 'visually-hidden',
+    genreList: false,
+    moreButton: false,
+    filmsCount: 4,
+  },
+};
+
+// export const LogoState = {
+//   mainPageHead: {
+//     logoStyle: '',
+//     logoLink: '',
+//   },
+//   mainPageFooter: {
+//     logoStyle: 'logo__link--light',
+//     logoLink: '',
+//   },
+//   otherPageHead: {
+//     logoStyle: '',
+//     logoLink: '/',
+//   },
+//   otherPageFooter:{
+//     logoStyle: 'logo__link--light',
+//     logoLink: '/',
+//   },
+// };

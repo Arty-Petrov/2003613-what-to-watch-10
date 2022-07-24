@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 
+
 function Logo(): JSX.Element {
   // Сейчас компонент предствален в максимально возможном состояние,
   // нужно сделать, чтобю он принимал параметры окружения и в соответсвии
   // с ними менял свои совойства (линки/стили)
+
   return (
     <div className="logo">
       <Link to="/" className="logo__link logo__link--light">

@@ -1,14 +1,13 @@
+import { Link } from 'react-router-dom';
+import FilmsList from '../../components/films-list/films-list';
+import Footer from '../../components/footer/footer';
+import Logo from '../../components/logo/logo';
+import SomeComp from '../../components/some-comp/some-comp';
+import UserBlock from '../../components/user-block/user-block';
 import Film from '../../types/film';
 import User from '../../types/user';
-import SomeComp from '../../components/some-comp/some-comp';
-import Logo from '../../components/logo/logo';
-import UserBlock from '../../components/user-block/user-block';
-import GenreList from '../../components/genre-list/genre-list';
-import FilmCard from '../../components/film-card/film-card';
-import ShowMoreButton from '../../components/show-more-button/show-more-button';
-import Footer from '../../components/footer/footer';
-import { Link } from 'react-router-dom';
-import { AppRoute } from '../../util/const';
+import { AppRoute, FilmsCatalogState } from '../../util/const';
+
 
 type CatalogProps = {
   films: Film[];
@@ -67,14 +66,7 @@ function CatalogPage(props: CatalogProps): JSX.Element {
         </div>
       </section>
       <div className="page-content">
-        <section className="catalog">
-          <h2 className="catalog__title visually-hidden">Catalog</h2>
-          <GenreList />
-          <div className="catalog__films-list">
-            {films.map((item) => <FilmCard film = {item} key = {item.id} />)}
-          </div>
-          <ShowMoreButton />
-        </section>
+        <FilmsList films={films} state={FilmsCatalogState.Catalog} />
         <Footer />
       </div>
     </>
