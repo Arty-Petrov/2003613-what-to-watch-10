@@ -1,5 +1,5 @@
-import Film from '../../types/film';
 import { useParams } from 'react-router-dom';
+import Film from '../../types/film';
 import NotFoundPage from '../not-found-page/not-found-page';
 
 type PlayerPageProps = {

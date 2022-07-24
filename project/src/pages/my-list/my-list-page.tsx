@@ -1,8 +1,8 @@
+import FilmsList from '../../components/films-list/films-list';
+import Footer from '../../components/footer/footer';
 import Film from '../../types/film';
 import User from '../../types/user';
-
-import Footer from '../../components/footer/footer';
-import FilmCard from '../../components/film-card/film-card';
+import { FilmsCatalogState } from '../../util/const';
 
 type MyListProps = {
   films: Film[];
@@ -33,18 +33,9 @@ function MyListPage ({films, user}: MyListProps): JSX.Element {
           </li>
         </ul>
       </header>
-
-      <section className="catalog">
-        <h2 className="catalog__title visually-hidden">Catalog</h2>
-
-        <div className="catalog__films-list">
-          {films.slice(0,8).map((item) => <FilmCard film = {item} key = {item.id} />)}
-        </div>
-      </section>
-
+      <FilmsList films={films} state={FilmsCatalogState.MyList} />
       <Footer />
     </div>
-
   );
 }
 

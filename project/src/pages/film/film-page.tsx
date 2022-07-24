@@ -1,13 +1,12 @@
-import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import { AppRoute } from '../../util/const';
+import { Link, useParams } from 'react-router-dom';
+import FilmOverview from '../../components/film-overview/film-overview';
+import FilmsList from '../../components/films-list/films-list';
+import Logo from '../../components/logo/logo';
+import SomeComp from '../../components/some-comp/some-comp';
+import UserBlock from '../../components/user-block/user-block';
 import Film from '../../types/film';
 import User from '../../types/user';
-import SomeComp from '../../components/some-comp/some-comp';
-import FilmCard from '../../components/film-card/film-card';
-import Logo from '../../components/logo/logo';
-import UserBlock from '../../components/user-block/user-block';
-import FilmOverview from '../../components/film-overview/film-overview';
+import { AppRoute, FilmsCatalogState } from '../../util/const';
 import NotFoundPage from '../not-found-page/not-found-page';
 
 type FilmInfoProps = {
@@ -74,7 +73,7 @@ function FilmPage({films, user}: FilmInfoProps): JSX.Element {
                   <span className="film-card__count">9</span>
                 </Link>
 
-                <Link to={`${film.id}${AppRoute.AddReview}`} className="btn film-card__button">Add review</Link>
+                <Link to={`${AppRoute.Film}${film.id}${AppRoute.AddReview}`} className="btn film-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -110,12 +109,7 @@ function FilmPage({films, user}: FilmInfoProps): JSX.Element {
       </section>
 
       <div className="page-content">
-        <section className="catalog catalog--like-this">
-          <h2 className="catalog__title">More like this</h2>
-          <div className="catalog__films-list">
-            {films.slice(0,3).map((item) => <FilmCard film = {item} key = {item.id} />)}
-          </div>
-        </section>
+        <FilmsList films={films} state={FilmsCatalogState.MoreLikeThis} />
       </div>
     </>
   );
