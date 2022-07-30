@@ -26,6 +26,19 @@ export enum AuthorizationStatus {
   Unknow = 'UNKNOW',
 }
 
+export enum FilmInfoSection {
+  Overview = 'Overview',
+  Details = 'Details',
+  Reviews = 'Reviews',
+}
+
+export enum FilmRating {
+  Bad = 'Bad',
+  Normal = 'Normal',
+  Good = 'Good',
+  VeryGood = 'Very good',
+  Awesome = 'Awesome',
+}
 export const FilmsCatalogState = {
   Catalog: {
     headText: 'Catalog',
@@ -49,7 +62,6 @@ export const FilmsCatalogState = {
     filmsCount: 4,
   },
 };
-
 // export const LogoState = {
 //   mainPageHead: {
 //     logoStyle: '',

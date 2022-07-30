@@ -7,14 +7,17 @@ const films: Film[] = [
     previewImage: 'https://10.react.pages.academy/static/film/preview/snatch.jpg',
     backgroundImage: 'https://10.react.pages.academy/static/film/background/Snatch.jpg',
     backgroundColor: '#FDFDFC',
-    description: 'Unscrupulous boxing promoters, violent bookmakers, a Russian gangster, incompetent amateur robbers and supposedly Jewish jewelers fight to track down a priceless stolen diamond.',
+    description: 'Unscrupulous boxing promoters, violent bookmakers, a Russian gangster, incompetent amateur robbers and supposedly Jewish jewelers fight to track down a priceless stolen diamond./nIn 1862, Amsterdam Vallon returns to the Five Points area of New York City seeking revenge against Bill the Butcher, his father\'s killer.',
     rating: 0.2,
     scoresCount: 716577,
     director: 'Guy Ritchie',
     starring: [
       'Jason Statham',
       'Brad Pitt',
-      'Benicio Del Toro'
+      'Benicio Del Toro',
+      'Leonardo DiCaprio',
+      'Emily Mortimer',
+      'Mark Ruffalo'
     ],
     runTime: 104,
     genre: 'Comedy',
@@ -37,6 +40,7 @@ const films: Film[] = [
     starring: [
       'Leonardo DiCaprio',
       'Cameron Diaz',
+      'Leonardo DiCaprio',
       'Daniel Day-Lewis'
     ],
     runTime: 167,

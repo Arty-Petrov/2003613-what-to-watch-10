@@ -9,11 +9,7 @@ type VideoPlayerProps = {
     isMuted: boolean;
   }
 }
-/// Предусмотрите возможность воспроизведения видео без звука.
-// у <video> есть атрибут poster. В нём можно указать путь к изображению постера — картинка,
-// которая отображается, когда видео не воспроизводится.
-// Это может помочь упростить задачу перевода карточки
-// в исходное состояние.
+// Если быстро перенести курсор с одного элемента на другой, то видео проигрывается в обоих карточках
 
 function VideoPlayer ({film, settings}:VideoPlayerProps): JSX.Element { //settings
   const {isPlaying} = settings;
@@ -34,6 +30,7 @@ function VideoPlayer ({film, settings}:VideoPlayerProps): JSX.Element { //settin
       src={videoSrc}
       ref={videoRef}
       poster={film.previewImage}
+      muted
       width="280"
       height="175"
     />
