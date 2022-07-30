@@ -26,6 +26,28 @@ export enum AuthorizationStatus {
   Unknow = 'UNKNOW',
 }
 
+export enum FilmInfoSection {
+  Overview = 'Overview',
+  Details = 'Details',
+  Reviews = 'Reviews',
+}
+
+export enum FilmRating {
+  Bad = 'Bad',
+  Normal = 'Normal',
+  Good = 'Good',
+  VeryGood = 'Very good',
+  Awesome = 'Awesome',
+}
+
+export const FilmRatingCheck = {
+  isBad: (rating: number)=>(rating < 3 && rating >= 0),
+  isNormal: (rating: number)=>(rating < 5 && rating >= 3),
+  isGood: (rating: number)=>(rating < 8 && rating >= 5),
+  isVeryGood: (rating: number)=>(rating < 10 && rating >= 8),
+  isAwesome: (rating: number)=>(rating === 10),
+};
+
 export const FilmsCatalogState = {
   Catalog: {
     headText: 'Catalog',
@@ -49,7 +71,6 @@ export const FilmsCatalogState = {
     filmsCount: 4,
   },
 };
-
 // export const LogoState = {
 //   mainPageHead: {
 //     logoStyle: '',

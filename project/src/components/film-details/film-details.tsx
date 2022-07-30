@@ -1,8 +1,21 @@
 import Film from '../../types/film';
+import { convertMinutesToHM } from '../../util/utils';
 
 type FilmDetailsProps = {
   film: Film;
 }
+const getStarringsList = (stringsArray: string[]) => {
+  let keyIndex = 0;
+  const array = [];
+  for (let i = 0; i < stringsArray.length; i++){
+    const isLastElement = (i === stringsArray.length - 1);
+    array.push(`${stringsArray[i].trim()}${(!isLastElement) ? ', ' : ''}`);
+    if (!isLastElement) {
+      array.push(<br key={keyIndex++}></br>);
+    }
+  }
+  return array;
+};
 
 function FilmDetails({film}: FilmDetailsProps): JSX.Element {
   return (
@@ -15,28 +28,15 @@ function FilmDetails({film}: FilmDetailsProps): JSX.Element {
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Starring</strong>
           <span className="film-card__details-value">
-            {film.starring.map((el) => `${el}, <br>`)}
+            {getStarringsList(film.starring)}
           </span>
-          {/* Нужно сделать метод, который генерирует список актеров */}
-          {/*Bill Murray, <br>*/}
-          {/*Edward Norton, <br>*/}
-          {/*Jude Law, <br>*/}
-          {/*Willem Dafoe, <br>*/}
-          {/*Saoirse Ronan, <br>*/}
-          {/*Tony Revoloru, <br>*/}
-          {/*Tilda Swinton, <br>*/}
-          {/*Tom Wilkinson, <br>*/}
-          {/*Owen Wilkinson, <br>*/}
-          {/*Adrien Brody, <br>*/}
-          {/*Ralph Fiennes, <br>*/}
-          {/*Jeff Goldblum*/}
         </p>
       </div>
 
       <div className="film-card__text-col">
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Run Time</strong>
-          <span className="film-card__details-value">{film.runTime}</span>
+          <span className="film-card__details-value">{convertMinutesToHM(film.runTime)}</span>
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Genre</strong>

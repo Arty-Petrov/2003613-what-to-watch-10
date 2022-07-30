@@ -1,5 +1,4 @@
 import { Link, useParams } from 'react-router-dom';
-import FilmOverview from '../../components/film-overview/film-overview';
 import FilmsList from '../../components/films-list/films-list';
 import Logo from '../../components/logo/logo';
 import SomeComp from '../../components/some-comp/some-comp';
@@ -8,16 +7,11 @@ import Film from '../../types/film';
 import User from '../../types/user';
 import { AppRoute, FilmsCatalogState } from '../../util/const';
 import NotFoundPage from '../not-found-page/not-found-page';
+import FilmInfoSections from '../../components/film-info-sections/film-info-sections';
 
 type FilmInfoProps = {
   films: Film[];
   user: User;
-}
-
-enum FilmInfoSection {
-  Overview = 'Overview',
-  Details = 'Details',
-  Reviews = 'Reviews',
 }
 
 function FilmPage({films, user}: FilmInfoProps): JSX.Element {
@@ -84,26 +78,7 @@ function FilmPage({films, user}: FilmInfoProps): JSX.Element {
             <div className="film-card__poster film-card__poster--big">
               <img src={film.posterImage} alt={film.name} width="218" height="327"/>
             </div>
-
-            <div className="film-card__desc">
-              <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <a href="/" className="film-nav__link">{FilmInfoSection.Overview}</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="/" className="film-nav__link">{FilmInfoSection.Details}</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="/" className="film-nav__link">{FilmInfoSection.Reviews}</a>
-                  </li>
-                </ul>
-              </nav>
-              {/* Делегируем nav елементу обработку события клика
-                  Показываем компонент соотвествующий evt.href
-              */}
-              <FilmOverview film={film}/>
-            </div>
+            <FilmInfoSections film={film} />
           </div>
         </div>
       </section>
