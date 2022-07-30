@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import Film from '../../types/film';
 import VideoPlayer from '../video-player/video-player';
 
+const PLAY_DELAY = 1000;
+
 type FilmCardSmallProps = {
   film: Film;
   callback: (id: number | null) => void;
@@ -15,7 +17,7 @@ function FilmCard({film, callback}: FilmCardSmallProps): JSX.Element {
     switch (evt.type) {
       case 'mouseenter':
         callback(film.id);
-        setTimeout(setActive, 1000, !isActive);
+        setTimeout(setActive, PLAY_DELAY, !isActive);
         break;
       case 'mouseleave':
         callback(null);
