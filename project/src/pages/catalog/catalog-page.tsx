@@ -4,19 +4,30 @@ import Footer from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
 import SomeComp from '../../components/some-comp/some-comp';
 import UserBlock from '../../components/user-block/user-block';
+import { useAppSelector } from '../../hooks';
 import Film from '../../types/film';
 import User from '../../types/user';
 import { AppRoute, FilmsCatalogState } from '../../util/const';
+import { useDispatch } from 'react-redux';
+import { filterFilms } from '../../store/action';
+import { useEffect } from 'react';
 
 
 type CatalogProps = {
-  films: Film[];
   promo: Film;
   user: User;
 }
 
 function CatalogPage(props: CatalogProps): JSX.Element {
-  const {films, promo, user, } = props;
+  const { promo, user, } = props;
+  const dispatch = useDispatch();
+  const films = useAppSelector((state) => state.films);
+  const genre = useAppSelector((state) => state.genre);
+
+  useEffect(() => {
+    dispatch(filterFilms(genre));
+  }
+  , [dispatch, genre]);
 
   return (
     <>

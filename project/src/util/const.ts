@@ -1,14 +1,27 @@
-export enum Genres {
+export enum GenreMenu {
   AllGenres = 'All genres',
-  Comedies = 'Comedies',
+  Comedy = 'Comedies',
   Crime = 'Crime',
   Documentary = 'Documentary',
-  Dramas = 'Dramas',
+  Drama = 'Dramas',
   Horror = 'Horror',
-  KidsAndFamily = 'Kids & Family',
+  Adventure = 'Kids & Family',
   Romance = 'Romance',
   SciFi = 'Sci-Fi',
-  Thrillers = 'Thrillers',
+  Thriller = 'Thrillers',
+}
+
+export enum GenreFilters {
+  AllGenres = 'all',
+  Comedy = 'Comedy',
+  Crime = 'Crime',
+  Documentary = 'Documentary',
+  Drama = 'Drama',
+  Horror = 'Horror',
+  Adventure = 'Adventure',
+  Romance = 'Romance',
+  SciFi = 'Scifi',
+  Thriller = 'Thriller',
 }
 
 export enum AppRoute {

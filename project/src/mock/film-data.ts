@@ -1,4 +1,6 @@
 import Film from '../types/film';
+import { GenreFilters } from '../util/const';
+import { Filter } from '../util/filters';
 
 const films: Film[] = [
   {
@@ -582,4 +584,4 @@ const films: Film[] = [
   }
 ];
 
-export const generateFilms = (): Film[] => films;
+export const generateFilms = (genre = GenreFilters.AllGenres): Film[] => Filter[genre](films);

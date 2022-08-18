@@ -1,37 +1,100 @@
-import {Genres} from '../../util/const';
+import {GenreFilters, GenreMenu} from '../../util/const';
+import { changeGenre } from '../../store/action';
+import { useAppDispatch } from '../../hooks/index';
+import { Link } from 'react-router-dom';
 
 function GenreList(): JSX.Element {
+  const dispatch = useAppDispatch();
+
   return (
     <ul className="catalog__genres-list">
       <li className="catalog__genres-item catalog__genres-item--active">
-        <a href="/" className="catalog__genres-link">{Genres.AllGenres}</a>
+        <a href="/" className="catalog__genres-link"
+          onClick={
+            () => dispatch(changeGenre(GenreFilters.AllGenres))
+          }
+        >
+          {GenreMenu.AllGenres}
+        </a>
       </li>
       <li className="catalog__genres-item">
-        <a href="/" className="catalog__genres-link">{Genres.Comedies}</a>
+        <Link to="/" className="catalog__genres-link"
+          onClick={
+            () => dispatch(changeGenre(GenreFilters.Comedy))
+          }
+        >
+          {GenreMenu.Comedy}
+        </Link>
       </li>
       <li className="catalog__genres-item">
-        <a href="/" className="catalog__genres-link">{Genres.Crime}</a>
+        <Link to="/" className="catalog__genres-link"
+          onClick={
+            () => dispatch(changeGenre(GenreFilters.Crime))
+          }
+        >{GenreMenu.Crime}
+        </Link>
       </li>
       <li className="catalog__genres-item">
-        <a href="/" className="catalog__genres-link">{Genres.Documentary}</a>
+        <Link to="/" className="catalog__genres-link"
+          onClick={
+            () => dispatch(changeGenre(GenreFilters.Documentary))
+          }
+        >
+          {GenreMenu.Documentary}
+        </Link>
       </li>
       <li className="catalog__genres-item">
-        <a href="/" className="catalog__genres-link">{Genres.Dramas}</a>
+        <Link to="/" className="catalog__genres-link"
+          onClick={
+            () => dispatch(changeGenre(GenreFilters.Drama))
+          }
+        >
+          {GenreMenu.Drama}
+        </Link>
       </li>
       <li className="catalog__genres-item">
-        <a href="/" className="catalog__genres-link">{Genres.Horror}</a>
+        <Link to="/" className="catalog__genres-link"
+          onClick={
+            () => dispatch(changeGenre(GenreFilters.Horror))
+          }
+        >
+          {GenreMenu.Horror}
+        </Link>
       </li>
       <li className="catalog__genres-item">
-        <a href="/" className="catalog__genres-link">{Genres.KidsAndFamily}</a>
+        <Link to="/" className="catalog__genres-link"
+          onClick={
+            () => dispatch(changeGenre(GenreFilters.Adventure))
+          }
+        >
+          {GenreMenu.Adventure}
+        </Link>
       </li>
       <li className="catalog__genres-item">
-        <a href="/" className="catalog__genres-link">{Genres.Romance}</a>
+        <Link to="/" className="catalog__genres-link"
+          onClick={
+            () => dispatch(changeGenre(GenreFilters.Romance))
+          }
+        >
+          {GenreMenu.Romance}
+        </Link>
       </li>
       <li className="catalog__genres-item">
-        <a href="/" className="catalog__genres-link">{Genres.SciFi}</a>
+        <Link to="/" className="catalog__genres-link"
+          onClick={
+            () => dispatch(changeGenre(GenreFilters.SciFi))
+          }
+        >
+          {GenreMenu.SciFi}
+        </Link>
       </li>
       <li className="catalog__genres-item">
-        <a href="/" className="catalog__genres-link">{Genres.Thrillers}</a>
+        <Link to="/" className="catalog__genres-link"
+          onClick={
+            () => dispatch(changeGenre(GenreFilters.Thriller))
+          }
+        >{GenreMenu.Thriller}
+        </Link>
       </li>
     </ul>
   );

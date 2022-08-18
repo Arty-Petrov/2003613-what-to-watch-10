@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 import App from './components/app/app';
 import { generateFilms } from './mock/film-data';
+import { store } from './store';
 
 const films = generateFilms();
 const user = {
@@ -18,10 +20,12 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App
-      films={films}
-      promo={films[0]}
-      user={user}
-    />
+    <Provider store = {store}>
+      <App
+        films={films}
+        promo={films[0]}
+        user={user}
+      />
+    </Provider>
   </React.StrictMode>,
 );
