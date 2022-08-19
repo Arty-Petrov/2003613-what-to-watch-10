@@ -1,15 +1,15 @@
-import {GenreFilters} from './const';
+import {Genre} from './const';
 import Film from '../types/film';
 
 export const Filter = {
-  [GenreFilters.AllGenres]: (films: Film []): Film [] => films,
-  [GenreFilters.Comedy]: (films: Film []): Film [] => films.filter((film) => film.genre === GenreFilters.Comedy),
-  [GenreFilters.Crime]: (films: Film []): Film [] => films.filter((film) => film.genre === GenreFilters.Crime),
-  [GenreFilters.Documentary]: (films: Film []): Film [] => films.filter((film) => film.genre === GenreFilters.Documentary),
-  [GenreFilters.Drama]: (films: Film []): Film [] => films.filter((film) => film.genre === GenreFilters.Drama),
-  [GenreFilters.Horror]: (films: Film []): Film [] => films.filter((film) => film.genre === GenreFilters.Horror),
-  [GenreFilters.Adventure]: (films: Film []): Film [] => films.filter((film) => film.genre === GenreFilters.Adventure),
-  [GenreFilters.Romance]: (films: Film []): Film [] => films.filter((film) => film.genre === GenreFilters.Romance),
-  [GenreFilters.SciFi]: (films: Film []): Film [] => films.filter((film) => film.genre === GenreFilters.SciFi),
-  [GenreFilters.Thriller]: (films: Film []): Film [] => films.filter((film) => film.genre === GenreFilters.Thriller),
+  [Genre.AllGenres]: (films: Film []): Film [] => films,
+  [Genre.Comedy]: (films: Film []): Film [] => films.filter((film) => film.genre === Genre.Comedy),
+  [Genre.Crime]: (films: Film []): Film [] => films.filter((film) => film.genre === Genre.Crime),
+  [Genre.Documentary]: (films: Film []): Film [] => films.filter((film) => film.genre === Genre.Documentary),
+  [Genre.Drama]: (films: Film []): Film [] => films.filter((film) => film.genre === Genre.Drama),
+  [Genre.Horror]: (films: Film []): Film [] => films.filter((film) => film.genre === Genre.Horror),
+  [Genre.Adventure]: (films: Film []): Film [] => films.filter((film) => film.genre === Genre.Adventure),
+  [Genre.Romance]: (films: Film []): Film [] => films.filter((film) => film.genre === Genre.Romance),
+  [Genre.Scifi]: (films: Film []): Film [] => films.filter((film) => film.genre === Genre.Scifi),
+  [Genre.Thriller]: (films: Film []): Film [] => films.filter((film) => film.genre === Genre.Thriller),
 };

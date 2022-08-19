@@ -1,11 +1,11 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { GenreFilters } from '../util/const';
+import { Genre } from '../util/const';
 import { changeGenre, filterFilms, reset } from './action';
 import { generateFilms } from '../mock/film-data';
 
 const initialState = {
-  genre: GenreFilters.AllGenres,
-  films: generateFilms(GenreFilters.AllGenres),
+  genre: Genre.AllGenres,
+  films: generateFilms(Genre.AllGenres),
   filmsCounter: 20,
   // activeFilmCard: null,
 };

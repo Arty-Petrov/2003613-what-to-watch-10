@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import FilmsList from '../../components/films-list/films-list';
 import Footer from '../../components/footer/footer';
@@ -5,12 +7,10 @@ import Logo from '../../components/logo/logo';
 import SomeComp from '../../components/some-comp/some-comp';
 import UserBlock from '../../components/user-block/user-block';
 import { useAppSelector } from '../../hooks';
+import { filterFilms } from '../../store/action';
 import Film from '../../types/film';
 import User from '../../types/user';
 import { AppRoute, FilmsCatalogState } from '../../util/const';
-import { useDispatch } from 'react-redux';
-import { filterFilms } from '../../store/action';
-import { useEffect } from 'react';
 
 
 type CatalogProps = {
