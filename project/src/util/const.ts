@@ -85,6 +85,8 @@ export const FilmsCatalogState = {
     filmsCount: 4,
   },
 };
+
+export const FILM_COUNT_STEP = 8;
 // export const LogoState = {
 //   mainPageHead: {
 //     logoStyle: '',

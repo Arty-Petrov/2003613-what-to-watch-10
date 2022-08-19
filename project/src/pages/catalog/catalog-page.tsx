@@ -21,13 +21,14 @@ type CatalogProps = {
 function CatalogPage(props: CatalogProps): JSX.Element {
   const { promo, user, } = props;
   const dispatch = useDispatch();
-  const films = useAppSelector((state) => state.films);
   const genre = useAppSelector((state) => state.genre);
+  const filmsCount = useAppSelector((state) => state.filmsCount);
+  const films = useAppSelector((state) => state.films).slice(0, filmsCount);
 
   useEffect(() => {
     dispatch(filterFilms(genre));
   }
-  , [dispatch, genre]);
+  , [dispatch, genre, filmsCount]);
 
   return (
     <>
