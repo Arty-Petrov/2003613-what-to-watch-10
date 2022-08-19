@@ -30,7 +30,7 @@ function FilmsList ({films, state}: FilmsListProps): JSX.Element {
       <h2 className={`catalog__title ${state.headStyle}`}>{state.headText}</h2>
       {(state.genreList) ? <GenreList /> : null}
       <div className="catalog__films-list">
-        {films.slice(0,state.filmsCount).map((item) =>
+        {films.map((item) =>
           <FilmCard key = {item.id} film = {item} callback={activeCardIdHandler}/>)}
       </div>
       {(state.moreButton) ? <ShowMoreButton /> : null}

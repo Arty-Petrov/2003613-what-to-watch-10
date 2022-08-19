@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../hooks/index';
-import { changeGenre } from '../../store/action';
+import { changeGenre, resetFilmsCount } from '../../store/action';
 import { store } from '../../store/index';
 import { Genre } from '../../util/const';
 import GenreButton from '../genre-button/genre-button';
@@ -8,13 +8,15 @@ import { generateFilms } from '../../mock/film-data';
 
 function GenreList(): JSX.Element {
   const dispatch = useAppDispatch();
-  const activeGenre = useAppSelector(store.getState).genre;
+  const state = useAppSelector(store.getState);
+  const activeGenre = state.genre;
   const genres = Array.from(new Set([Genre.AllGenres, ...generateFilms().map((film) => film.genre)]));
 
   const onButtonClickHandler = (evt: React.MouseEvent) => {
     const clickedGenre = evt.currentTarget.getAttribute('data-genre');
     if (clickedGenre !== null) {
       dispatch(changeGenre(clickedGenre));
+      dispatch(resetFilmsCount());
     }
   };
 
