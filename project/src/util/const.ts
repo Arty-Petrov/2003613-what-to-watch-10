@@ -1,15 +1,29 @@
-export enum Genres {
-  AllGenres = 'All genres',
-  Comedies = 'Comedies',
-  Crime = 'Crime',
-  Documentary = 'Documentary',
-  Dramas = 'Dramas',
-  Horror = 'Horror',
-  KidsAndFamily = 'Kids & Family',
-  Romance = 'Romance',
-  SciFi = 'Sci-Fi',
-  Thrillers = 'Thrillers',
-}
+export const GenreButtonName: {[index: string]:string} = {
+  All: 'All genres',
+  Comedy: 'Comedies',
+  Crime: 'Crime',
+  Documentary: 'Documentary',
+  Drama: 'Dramas',
+  Horror: 'Horror',
+  Adventure: 'Kids & Family',
+  Romance: 'Romance',
+  Scifi: 'Sci-Fi',
+  Thriller: 'Thrillers',
+} as const;
+
+
+export const Genre: {[index: string]:string} = {
+  AllGenres: 'All',
+  Comedy: 'Comedy',
+  Crime: 'Crime',
+  Documentary: 'Documentary',
+  Drama: 'Drama',
+  Horror: 'Horror',
+  Adventure: 'Adventure',
+  Romance: 'Romance',
+  Scifi: 'Scifi',
+  Thriller: 'Thriller',
+} as const;
 
 export enum AppRoute {
   Root = '/',

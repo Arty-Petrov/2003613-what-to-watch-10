@@ -27,7 +27,7 @@ function App(props: AppProps): JSX.Element {
 
         <Route path={AppRoute.Root} >
           <Route index element={
-            <CatalogPage films={films} promo={promo} user={user} />
+            <CatalogPage promo={promo} user={user} />
           }
           />
 
