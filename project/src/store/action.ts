@@ -4,8 +4,8 @@ import { AuthorizationStatus } from '../util/const';
 
 export const setError = createAction<string | null>('app/setError');
 export const changeGenre = createAction('catalog/changeGenre', (value) => ({payload: value}));
-export const filterFilms = createAction('catalog/filterFilms', (value) => ({payload: value}));
 export const incrFilmsCount = createAction('catalog/incrFilmsCount');
+export const setGenreFilmsCount = createAction<number | null>('catalog/setGenreFilmsCount');
 export const resetFilmsCount = createAction('catalog/resetFilmsCount');
 export const reset = createAction('catalog/reset');
 

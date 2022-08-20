@@ -5,13 +5,13 @@ import { store } from '../../store/index';
 function ShowMoreButton(): JSX.Element | null{
   const dispatch = useAppDispatch();
   const state = useAppSelector(store.getState);
-  const {films, filmsCount} = state;
+  const {genreFilmsCount, filmsToRenderCount,} = state;
 
   const handleButtonClick = () => {
     dispatch(incrFilmsCount());
   };
 
-  if (films.length >= filmsCount){
+  if (genreFilmsCount >= filmsToRenderCount){
     return (
       <div className="catalog__more">
         <button className="catalog__button" onClick={handleButtonClick} type="button">Show more</button>

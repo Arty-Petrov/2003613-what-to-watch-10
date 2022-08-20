@@ -1,13 +1,13 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { Genre, FILM_COUNT_STEP, AuthorizationStatus } from '../util/const';
-import { changeGenre, filterFilms, incrFilmsCount, resetFilmsCount, reset, loadFilms, requireAuthorization, setError, setDataLoadingStatus } from './action';
-import { generateFilms } from '../mock/film-data';
+import { changeGenre, incrFilmsCount, resetFilmsCount, reset, loadFilms, requireAuthorization, setError, setDataLoadingStatus, setGenreFilmsCount } from './action';
 import { Films } from '../types/film';
 
 type InitalState = {
   genre: string,
   films: Films,
-  filmsCount: number,
+  filmsToRenderCount: number,
+  genreFilmsCount: number,
   authorizationStatus: AuthorizationStatus,
   error: string | null,
   isDataLoading: boolean,
@@ -15,8 +15,9 @@ type InitalState = {
 
 const initialState: InitalState = {
   genre: Genre.AllGenres,
-  films: generateFilms(Genre.AllGenres),
-  filmsCount: FILM_COUNT_STEP,
+  films: [],
+  filmsToRenderCount: FILM_COUNT_STEP,
+  genreFilmsCount: FILM_COUNT_STEP,
   authorizationStatus: AuthorizationStatus.Unknown,
   error: null,
   isDataLoading: true,
@@ -28,19 +29,20 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(changeGenre, (state, { payload }) => {
       state.genre = payload;
     })
-    .addCase(filterFilms, (state, { payload }) => {
-      state.films = generateFilms(payload);
-    })
     .addCase(incrFilmsCount, (state) => {
-      state.filmsCount += FILM_COUNT_STEP;
+      state.filmsToRenderCount += FILM_COUNT_STEP;
+    })
+    .addCase(setGenreFilmsCount, (state, { payload }) => {
+      state.genreFilmsCount = (payload !== null) ? payload : FILM_COUNT_STEP;
     })
     .addCase(resetFilmsCount, (state) => {
-      state.filmsCount = FILM_COUNT_STEP;
+      state.filmsToRenderCount = FILM_COUNT_STEP;
     })
     .addCase(reset, (state) => {
       state.genre = initialState.genre;
       state.films = initialState.films;
-      state.filmsCount = initialState.filmsCount;
+      state.filmsToRenderCount = FILM_COUNT_STEP;
+      state.genreFilmsCount = FILM_COUNT_STEP;
     })
     .addCase(loadFilms, (state, action) => {
       state.films = action.payload;
