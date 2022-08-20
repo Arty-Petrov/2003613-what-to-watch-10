@@ -21,7 +21,6 @@ const initialState: InitalState = {
   authorizationStatus: AuthorizationStatus.Unknown,
   error: null,
   isDataLoading: true,
-  // activeFilmCard: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -44,17 +43,17 @@ const reducer = createReducer(initialState, (builder) => {
       state.filmsToRenderCount = FILM_COUNT_STEP;
       state.genreFilmsCount = FILM_COUNT_STEP;
     })
-    .addCase(loadFilms, (state, action) => {
-      state.films = action.payload;
+    .addCase(loadFilms, (state, { payload }) => {
+      state.films = payload;
     })
-    .addCase(setDataLoadingStatus, (state, action) => {
-      state.isDataLoading = action.payload;
+    .addCase(setDataLoadingStatus, (state, { payload }) => {
+      state.isDataLoading = payload;
     })
-    .addCase(requireAuthorization, (state, action) => {
-      state.authorizationStatus = action.payload;
+    .addCase(requireAuthorization, (state, { payload }) => {
+      state.authorizationStatus = payload;
     })
-    .addCase(setError, (state, action) => {
-      state.error = action.payload;
+    .addCase(setError, (state, { payload }) => {
+      state.error = payload;
     });
 });
 

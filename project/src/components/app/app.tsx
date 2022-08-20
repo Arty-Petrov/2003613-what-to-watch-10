@@ -21,8 +21,6 @@ type AppProps = {
 function App(props: AppProps): JSX.Element {
   const {promo, user} = props;
   const {authorizationStatus, isDataLoading} = useAppSelector((state) => state);
-  // eslint-disable-next-line no-console
-  console.log(isDataLoading);
 
   if (isDataLoading) {
     return (
