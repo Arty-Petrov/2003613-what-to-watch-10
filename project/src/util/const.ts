@@ -1,7 +1,5 @@
 export const FILM_COUNT_STEP = 8;
 
-export const TIMEOUT_SHOW_ERROR = 2000;
-
 export const GenreButtonName: {[index: string]:string} = {
   All: 'All genres',
   Comedy: 'Comedies',

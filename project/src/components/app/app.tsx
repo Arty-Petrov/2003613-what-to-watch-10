@@ -1,4 +1,5 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
+import browserHistory from '../../browser-history';
 import { useAppSelector } from '../../hooks';
 import AddReviewPage from '../../pages/add-review-page/add-review-page';
 import CatalogPage from '../../pages/catalog/catalog-page';
@@ -8,19 +9,12 @@ import LoginPage from '../../pages/login/login-page';
 import MyListPage from '../../pages/my-list/my-list-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PlayerPage from '../../pages/player/player-page';
-import { Film } from '../../types/film';
-import { UserData } from '../../types/user-data';
 import { AppRoute } from '../../util/const';
+import HistoryRouter from '../history-route/history-route';
 import PrivateRoute from '../private-route/private-route';
 
-type AppProps = {
-  promo: Film;
-  user: UserData;
-}
-
-function App(props: AppProps): JSX.Element {
-  const {promo, user} = props;
-  const {authorizationStatus, isDataLoading} = useAppSelector((state) => state);
+function App(): JSX.Element {
+  const {isDataLoading} = useAppSelector((state) => state);
 
   if (isDataLoading) {
     return (
@@ -29,13 +23,13 @@ function App(props: AppProps): JSX.Element {
   }
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
 
       <Routes>
 
         <Route path={AppRoute.Root} >
           <Route index element={
-            <CatalogPage promo={promo} user={user} />
+            <CatalogPage />
           }
           />
 
@@ -49,10 +43,8 @@ function App(props: AppProps): JSX.Element {
           <Route
             path={AppRoute.MyList}
             element={
-              <PrivateRoute
-                authorizationStatus={authorizationStatus}
-              >
-                <MyListPage user={user}/>
+              <PrivateRoute>
+                <MyListPage />
               </PrivateRoute>
             }
           />
@@ -61,12 +53,14 @@ function App(props: AppProps): JSX.Element {
             <Route path=":id">
               <Route index
                 element={
-                  <FilmPage user={user} />
+                  <FilmPage />
                 }
               />
               <Route path={`${AppRoute.Film}:id${AppRoute.AddReview}`}
                 element={
-                  <AddReviewPage user={user} />
+                  <PrivateRoute>
+                    <AddReviewPage />
+                  </PrivateRoute>
                 }
               />
             </Route>
@@ -91,7 +85,7 @@ function App(props: AppProps): JSX.Element {
 
       </Routes>
 
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 

@@ -3,14 +3,9 @@ import Logo from '../../components/logo/logo';
 import ReviewForm from '../../components/review-form/review-form';
 import UserBlock from '../../components/user-block/user-block';
 import { useAppSelector } from '../../hooks';
-import { UserData } from '../../types/user-data';
 import NotFoundPage from '../not-found-page/not-found-page';
 
-type ReviewPageProps = {
-  user: UserData;
-}
-
-function AddReviewPage({user}: ReviewPageProps): JSX.Element {
+function AddReviewPage(): JSX.Element {
   const {id} = useParams();
   const {films} = useAppSelector((state) => state); // Заменить на соответствующий API
   const film = films.find((item) => item.id === Number(id));
@@ -42,7 +37,7 @@ function AddReviewPage({user}: ReviewPageProps): JSX.Element {
               </li>
             </ul>
           </nav>
-          <UserBlock avatarUrl={user.avatarUrl} name={user.name} />
+          <UserBlock />
         </header>
 
         <div className="film-card__poster film-card__poster--small">
