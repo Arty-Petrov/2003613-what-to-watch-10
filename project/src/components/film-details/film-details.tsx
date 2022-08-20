@@ -1,4 +1,4 @@
-import Film from '../../types/film';
+import { Film } from '../../types/film';
 import { convertMinutesToHM } from '../../util/utils';
 
 type FilmDetailsProps = {

@@ -5,8 +5,7 @@ import { store } from '../../store/index';
 function ShowMoreButton(): JSX.Element | null{
   const dispatch = useAppDispatch();
   const state = useAppSelector(store.getState);
-  const filmsCount = state.filmsCount;
-  const films = state.films;
+  const {films, filmsCount} = state;
 
   const handleButtonClick = () => {
     dispatch(incrFilmsCount());

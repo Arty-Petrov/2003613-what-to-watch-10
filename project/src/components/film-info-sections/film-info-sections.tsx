@@ -1,10 +1,10 @@
-import Film from '../../types/film';
 import { useState } from 'react';
+import comments from '../../mock/comments';
+import { Film } from '../../types/film';
 import { FilmInfoSection } from '../../util/const';
 import FilmDetails from '../film-details/film-details';
 import FilmOverview from '../film-overview/film-overview';
 import FilmReview from '../film-review/film-review';
-import comments from '../../mock/comments';
 
 type FilmInfoSectionsProps = {
   film: Film;

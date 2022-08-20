@@ -8,27 +8,25 @@ import SomeComp from '../../components/some-comp/some-comp';
 import UserBlock from '../../components/user-block/user-block';
 import { useAppSelector } from '../../hooks';
 import { filterFilms } from '../../store/action';
-import Film from '../../types/film';
-import User from '../../types/user';
+import { Film } from '../../types/film';
+import { UserData } from '../../types/user-data';
 import { AppRoute, FilmsCatalogState } from '../../util/const';
-
 
 type CatalogProps = {
   promo: Film;
-  user: User;
+  user: UserData;
 }
 
 function CatalogPage(props: CatalogProps): JSX.Element {
   const { promo, user, } = props;
   const dispatch = useDispatch();
-  const genre = useAppSelector((state) => state.genre);
-  const filmsCount = useAppSelector((state) => state.filmsCount);
-  const films = useAppSelector((state) => state.films).slice(0, filmsCount);
+  const { genre, filmsCount, films } = useAppSelector((state) => state);
+  const filmsToShow = films.slice(0, filmsCount);
 
   useEffect(() => {
     dispatch(filterFilms(genre));
   }
-  , [dispatch, genre, filmsCount]);
+  , [dispatch, genre, filmsCount, ]);
 
   return (
     <>
@@ -78,7 +76,7 @@ function CatalogPage(props: CatalogProps): JSX.Element {
         </div>
       </section>
       <div className="page-content">
-        <FilmsList films={films} state={FilmsCatalogState.Catalog} />
+        <FilmsList films={filmsToShow} state={FilmsCatalogState.Catalog} />
         <Footer />
       </div>
     </>

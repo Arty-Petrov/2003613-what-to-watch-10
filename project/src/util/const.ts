@@ -1,3 +1,7 @@
+export const FILM_COUNT_STEP = 8;
+
+export const TIMEOUT_SHOW_ERROR = 2000;
+
 export const GenreButtonName: {[index: string]:string} = {
   All: 'All genres',
   Comedy: 'Comedies',
@@ -37,7 +41,7 @@ export enum AppRoute {
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
-  Unknow = 'UNKNOW',
+  Unknown = 'UNKNOW',
 }
 
 export enum FilmInfoSection {
@@ -60,7 +64,7 @@ export const FilmRatingCheck = {
   isGood: (rating: number)=>(rating < 8 && rating >= 5),
   isVeryGood: (rating: number)=>(rating < 10 && rating >= 8),
   isAwesome: (rating: number)=>(rating === 10),
-};
+} as const;
 
 export const FilmsCatalogState = {
   Catalog: {
@@ -84,9 +88,16 @@ export const FilmsCatalogState = {
     moreButton: false,
     filmsCount: 4,
   },
-};
+} as const;
 
-export const FILM_COUNT_STEP = 8;
+export enum APIRoute {
+  films = '/films',
+  promo = '/promo',
+  favorite = '/favorite',
+  Login = '/login',
+  Logout = '/logout',
+}
+
 // export const LogoState = {
 //   mainPageHead: {
 //     logoStyle: '',

@@ -1,8 +1,8 @@
-import Film from '../types/film';
+import { Films } from '../types/film';
 import { Genre } from '../util/const';
 import { Filter } from '../util/filters';
 
-const films: Film[] = [
+const films: Films = [
   {
     name: 'Snatch',
     posterImage: 'https://10.react.pages.academy/static/film/poster/Snatch.jpg',
@@ -584,4 +584,4 @@ const films: Film[] = [
   }
 ];
 
-export const generateFilms = (genre = Genre.AllGenres): Film[] => Filter[genre](films);
+export const generateFilms = (genre = Genre.AllGenres): Films => Filter[genre](films);

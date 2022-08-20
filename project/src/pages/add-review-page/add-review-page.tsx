@@ -2,17 +2,17 @@ import { useParams } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import ReviewForm from '../../components/review-form/review-form';
 import UserBlock from '../../components/user-block/user-block';
-import Film from '../../types/film';
-import User from '../../types/user';
+import { useAppSelector } from '../../hooks';
+import { UserData } from '../../types/user-data';
 import NotFoundPage from '../not-found-page/not-found-page';
 
 type ReviewPageProps = {
-  films: Film[];
-  user: User;
+  user: UserData;
 }
 
-function AddReviewPage({films, user}: ReviewPageProps): JSX.Element {
+function AddReviewPage({user}: ReviewPageProps): JSX.Element {
   const {id} = useParams();
+  const {films} = useAppSelector((state) => state); // Заменить на соответствующий API
   const film = films.find((item) => item.id === Number(id));
 
   if (!film){
