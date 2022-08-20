@@ -1,13 +1,11 @@
 import { useParams } from 'react-router-dom';
-import Film from '../../types/film';
+import { useAppSelector } from '../../hooks';
 import NotFoundPage from '../not-found-page/not-found-page';
 
-type PlayerPageProps = {
-  films: Film[];
-}
 
-function PlayerPage ({films}: PlayerPageProps): JSX.Element {
+function PlayerPage (): JSX.Element {
   const {id} = useParams();
+  const {films} = useAppSelector((state) => state); // Заменить на соответствующий API
   const film = films.find((item) => item.id === Number(id));
   const divStyle = {left: '30%'};
 

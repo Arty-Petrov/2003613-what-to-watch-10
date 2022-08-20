@@ -7,28 +7,29 @@ import Logo from '../../components/logo/logo';
 import SomeComp from '../../components/some-comp/some-comp';
 import UserBlock from '../../components/user-block/user-block';
 import { useAppSelector } from '../../hooks';
-import { filterFilms } from '../../store/action';
-import Film from '../../types/film';
-import User from '../../types/user';
+import { setGenreFilmsCount } from '../../store/action';
+import { Film } from '../../types/film';
+import { UserData } from '../../types/user-data';
 import { AppRoute, FilmsCatalogState } from '../../util/const';
-
+import { Filter } from '../../util/filters';
 
 type CatalogProps = {
   promo: Film;
-  user: User;
+  user: UserData;
 }
 
 function CatalogPage(props: CatalogProps): JSX.Element {
   const { promo, user, } = props;
   const dispatch = useDispatch();
-  const genre = useAppSelector((state) => state.genre);
-  const filmsCount = useAppSelector((state) => state.filmsCount);
-  const films = useAppSelector((state) => state.films).slice(0, filmsCount);
+  const { genre, filmsToRenderCount, films } = useAppSelector((state) => state);
+  const genreFilms = Filter[genre](films);
+  const filmsToRender = genreFilms.slice(0, filmsToRenderCount);
+  const genreFilmsCount = genreFilms.length;
 
   useEffect(() => {
-    dispatch(filterFilms(genre));
+    dispatch(setGenreFilmsCount(genreFilmsCount));
   }
-  , [dispatch, genre, filmsCount]);
+  , [dispatch, genre, genreFilmsCount,]);
 
   return (
     <>
@@ -78,7 +79,7 @@ function CatalogPage(props: CatalogProps): JSX.Element {
         </div>
       </section>
       <div className="page-content">
-        <FilmsList films={films} state={FilmsCatalogState.Catalog} />
+        <FilmsList films={filmsToRender} state={FilmsCatalogState.Catalog} />
         <Footer />
       </div>
     </>

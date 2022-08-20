@@ -1,6 +1,6 @@
-import User from '../../types/user';
+import { UserData } from '../../types/user-data';
 
-type UserBlockProps = Pick<User, 'name' | 'avatarUrl'>
+type UserBlockProps = Pick<UserData, 'name' | 'avatarUrl'>
 function UserBlock({name, avatarUrl}: UserBlockProps): JSX.Element {
   return (
     <ul className="user-block">

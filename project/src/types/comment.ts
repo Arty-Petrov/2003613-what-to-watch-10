@@ -1,11 +1,11 @@
-import User from './user';
+import { UserData } from './user-data';
 
-type Comment = {
+export type Comment = {
   comment: string;
   date: string;
   id: number;
   rating: number;
-  user: Pick<User, 'id' | 'name'>;
+  user: Pick<UserData, 'id' | 'name'>;
 };
 
 export default Comment;

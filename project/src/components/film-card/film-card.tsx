@@ -1,12 +1,12 @@
 import { MouseEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Film from '../../types/film';
+import { Film } from '../../types/film';
 import VideoPlayer from '../video-player/video-player';
 
 const PLAY_DELAY = 1000;
 
 type FilmCardSmallProps = {
-  film: Film;
+  film: Film ;
   callback: (id: number | null) => void;
 }
 

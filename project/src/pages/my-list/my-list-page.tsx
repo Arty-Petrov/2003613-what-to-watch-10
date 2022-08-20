@@ -1,15 +1,15 @@
 import FilmsList from '../../components/films-list/films-list';
 import Footer from '../../components/footer/footer';
-import Film from '../../types/film';
-import User from '../../types/user';
+import { useAppSelector } from '../../hooks';
+import { UserData } from '../../types/user-data';
 import { FilmsCatalogState } from '../../util/const';
 
 type MyListProps = {
-  films: Film[];
-  user: User;
+  user: UserData;
 }
 
-function MyListPage ({films, user}: MyListProps): JSX.Element {
+function MyListPage ({user}: MyListProps): JSX.Element {
+  const {films} = useAppSelector((state) => state);
   return (
     <div className="user-page">
       <header className="page-header user-page__head">

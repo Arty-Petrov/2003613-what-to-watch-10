@@ -4,6 +4,10 @@ import { Provider } from 'react-redux';
 import App from './components/app/app';
 import { generateFilms } from './mock/film-data';
 import { store } from './store';
+import { checkAuthAction, fetchFilmsAction } from './store/api-actions';
+
+store.dispatch(fetchFilmsAction());
+store.dispatch(checkAuthAction());
 
 const films = generateFilms();
 const user = {
@@ -22,7 +26,6 @@ root.render(
   <React.StrictMode>
     <Provider store = {store}>
       <App
-        films={films}
         promo={films[0]}
         user={user}
       />
