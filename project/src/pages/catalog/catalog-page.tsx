@@ -8,20 +8,12 @@ import SomeComp from '../../components/some-comp/some-comp';
 import UserBlock from '../../components/user-block/user-block';
 import { useAppSelector } from '../../hooks';
 import { setGenreFilmsCount } from '../../store/action';
-import { Film } from '../../types/film';
-import { UserData } from '../../types/user-data';
 import { AppRoute, FilmsCatalogState } from '../../util/const';
 import { Filter } from '../../util/filters';
 
-type CatalogProps = {
-  promo: Film;
-  user: UserData;
-}
-
-function CatalogPage(props: CatalogProps): JSX.Element {
-  const { promo, user, } = props;
+function CatalogPage(): JSX.Element | null{
   const dispatch = useDispatch();
-  const { genre, filmsToRenderCount, films } = useAppSelector((state) => state);
+  const { genre, filmsToRenderCount, films, promo } = useAppSelector((state) => state);
   const genreFilms = Filter[genre](films);
   const filmsToRender = genreFilms.slice(0, filmsToRenderCount);
   const genreFilmsCount = genreFilms.length;
@@ -31,7 +23,7 @@ function CatalogPage(props: CatalogProps): JSX.Element {
   }
   , [dispatch, genre, genreFilmsCount,]);
 
-  return (
+  return (promo === null) ? null : (
     <>
       <SomeComp addElement={false} />
       <section className="film-card">
@@ -43,7 +35,7 @@ function CatalogPage(props: CatalogProps): JSX.Element {
 
         <header className="page-header film-card__head">
           <Logo />
-          <UserBlock name={user.name} avatarUrl={user.avatarUrl} />
+          <UserBlock />
         </header>
 
         <div className="film-card__wrap">

@@ -5,15 +5,11 @@ import Logo from '../../components/logo/logo';
 import SomeComp from '../../components/some-comp/some-comp';
 import UserBlock from '../../components/user-block/user-block';
 import { useAppSelector } from '../../hooks';
-import { UserData } from '../../types/user-data';
 import { AppRoute, FilmsCatalogState } from '../../util/const';
 import NotFoundPage from '../not-found-page/not-found-page';
 
-type FilmInfoProps = {
-  user: UserData;
-}
 
-function FilmPage({user}: FilmInfoProps): JSX.Element {
+function FilmPage(): JSX.Element {
   const {id} = useParams();
   const {films} = useAppSelector((state) => state); // Заменить на соответствующий API
   const film = films.find((item) => item.id === Number(id));
@@ -38,7 +34,7 @@ function FilmPage({user}: FilmInfoProps): JSX.Element {
 
           <header className="page-header film-card__head">
             <Logo />
-            <UserBlock avatarUrl={user.avatarUrl} name={user.name}/>
+            <UserBlock />
 
           </header>
 

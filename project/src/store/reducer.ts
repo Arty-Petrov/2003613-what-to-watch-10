@@ -1,26 +1,29 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { Genre, FILM_COUNT_STEP, AuthorizationStatus } from '../util/const';
-import { changeGenre, incrFilmsCount, resetFilmsCount, reset, loadFilms, requireAuthorization, setError, setDataLoadingStatus, setGenreFilmsCount } from './action';
-import { Films } from '../types/film';
+import { changeGenre, incrFilmsCount, resetFilmsCount, reset, loadFilms, requireAuthorization, setDataLoadingStatus, setGenreFilmsCount, setUserData, clearUserData, loadPromo } from './action';
+import { Film, Films } from '../types/film';
+import { UserInfo } from '../types/user-info';
 
 type InitalState = {
   genre: string,
   films: Films,
+  promo: Film | null,
   filmsToRenderCount: number,
   genreFilmsCount: number,
   authorizationStatus: AuthorizationStatus,
-  error: string | null,
+  userInfo: UserInfo | null,
   isDataLoading: boolean,
 }
 
 const initialState: InitalState = {
   genre: Genre.AllGenres,
   films: [],
+  promo: null,
   filmsToRenderCount: FILM_COUNT_STEP,
   genreFilmsCount: FILM_COUNT_STEP,
   authorizationStatus: AuthorizationStatus.Unknown,
-  error: null,
-  isDataLoading: true,
+  userInfo: null,
+  isDataLoading: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -46,14 +49,20 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(loadFilms, (state, { payload }) => {
       state.films = payload;
     })
+    .addCase(loadPromo, (state, { payload }) => {
+      state.promo = payload;
+    })
     .addCase(setDataLoadingStatus, (state, { payload }) => {
       state.isDataLoading = payload;
     })
     .addCase(requireAuthorization, (state, { payload }) => {
       state.authorizationStatus = payload;
     })
-    .addCase(setError, (state, { payload }) => {
-      state.error = payload;
+    .addCase(setUserData, (state, { payload }) => {
+      state.userInfo = payload;
+    })
+    .addCase(clearUserData, (state) => {
+      state.userInfo = null;
     });
 });
 
