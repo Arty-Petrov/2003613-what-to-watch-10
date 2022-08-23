@@ -34,6 +34,7 @@ export enum AppRoute {
   Player = '/player',
   Film = '/films/',
   AddReview = '/review',
+  NotFound = '/not-found',
 }
 
 export enum AuthorizationStatus {
@@ -89,9 +90,12 @@ export const FilmsCatalogState = {
 } as const;
 
 export enum APIRoute {
-  films = '/films',
-  promo = '/promo',
-  favorite = '/favorite',
+  Films = '/films',
+  Film = '/films',
+  Promo = '/promo',
+  Favorite = '/favorite',
+  Similar = '/similar',
+  Comments = '/comments',
   Login = '/login',
   Logout = '/logout',
 }

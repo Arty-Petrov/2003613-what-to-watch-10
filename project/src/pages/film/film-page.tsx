@@ -1,24 +1,34 @@
-import { Link, useParams } from 'react-router-dom';
-import FilmInfoSections from '../../components/film-info-sections/film-info-sections';
+import { useEffect } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import FilmsList from '../../components/films-list/films-list';
 import Logo from '../../components/logo/logo';
 import SomeComp from '../../components/some-comp/some-comp';
 import UserBlock from '../../components/user-block/user-block';
 import { useAppSelector } from '../../hooks';
+import { store } from '../../store';
+import { fetchFilmAction, fetchFilmCommentsAction, fetchSimilarFilmsAction } from '../../store/api-actions';
 import { AppRoute, FilmsCatalogState } from '../../util/const';
-import NotFoundPage from '../not-found-page/not-found-page';
+import FilmInfoTab from '../../components/film-info-tab/film-info-tab';
+import MyListButton from '../../components/my-list-button/my-list-button';
+import ReviewButton from '../../components/review-button/review-button';
 
 
 function FilmPage(): JSX.Element {
   const {id} = useParams();
-  const {films} = useAppSelector((state) => state); // Заменить на соответствующий API
-  const film = films.find((item) => item.id === Number(id));
-  const linkStyle = {textDecoration: 'none'};
+  const film = useAppSelector((state) => state.film);
+  const similarFilms = useAppSelector((state) => state.similarFilms);
+  const navigate = useNavigate();
 
-  if (!film){
-    return (
-      <NotFoundPage />
-    );
+  useEffect(() => {
+    if (typeof film?.id === 'undefined' || (`${film?.id}` !== `${id}`)){
+      store.dispatch(fetchFilmAction(`${id}`));
+      store.dispatch(fetchSimilarFilmsAction(`${id}`));
+      store.dispatch(fetchFilmCommentsAction(`${id}`));
+    }
+  }, [id, film]);
+
+  if (film === undefined){
+    navigate(AppRoute.NotFound);
   }
 
   return (
@@ -27,7 +37,7 @@ function FilmPage(): JSX.Element {
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={film.backgroundImage} alt={film.name} />
+            <img src={film?.backgroundImage} alt={film?.name} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -40,30 +50,22 @@ function FilmPage(): JSX.Element {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{film.name}</h2>
+              <h2 className="film-card__title">{film?.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{film.genre}</span>
-                <span className="film-card__year">{film.released}</span>
+                <span className="film-card__genre">{film?.genre}</span>
+                <span className="film-card__year">{film?.released}</span>
               </p>
 
               <div className="film-card__buttons">
 
-                <Link to={`${AppRoute.Player}/${film.id}`} className="btn btn--play film-card__button" >
+                <Link to={`${AppRoute.Player}/${film?.id}`} className="btn btn--play film-card__button" >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
                 </Link>
-
-                <Link to={`${AppRoute.MyList}`} className="btn btn--list film-card__button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span style={linkStyle}>My list</span>
-                  <span className="film-card__count">9</span>
-                </Link>
-
-                <Link to={`${AppRoute.Film}${film.id}${AppRoute.AddReview}`} className="btn film-card__button">Add review</Link>
+                <MyListButton />
+                <ReviewButton />
               </div>
             </div>
           </div>
@@ -72,15 +74,15 @@ function FilmPage(): JSX.Element {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={film.posterImage} alt={film.name} width="218" height="327"/>
+              <img src={film?.posterImage} alt={film?.name} width="218" height="327"/>
             </div>
-            <FilmInfoSections film={film} />
+            <FilmInfoTab />
           </div>
         </div>
       </section>
 
       <div className="page-content">
-        <FilmsList films={films} state={FilmsCatalogState.MoreLikeThis} />
+        <FilmsList films={similarFilms} state={FilmsCatalogState.MoreLikeThis} />
       </div>
     </>
   );

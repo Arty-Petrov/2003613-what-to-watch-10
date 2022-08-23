@@ -1,6 +1,6 @@
-import Comment from '../types/comment';
+import { Comments } from '../types/comment';
 
-const comments: Comment[] = [
+const comments: Comments = [
   {
     id: 1,
     user: {

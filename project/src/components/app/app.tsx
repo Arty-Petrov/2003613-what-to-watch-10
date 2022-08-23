@@ -10,20 +10,20 @@ import MyListPage from '../../pages/my-list/my-list-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PlayerPage from '../../pages/player/player-page';
 import { AppRoute } from '../../util/const';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRoute from '../history-route/history-route';
 import PrivateRoute from '../private-route/private-route';
 
 function App(): JSX.Element {
-  const {isDataLoading} = useAppSelector((state) => state);
+  const loadingStatus = useAppSelector((state) => state.isDataLoading);
 
-  if (isDataLoading) {
+  if (loadingStatus) {
     return (
       <LoadingScreen />
     );
   }
 
   return (
-    <HistoryRouter history={browserHistory}>
+    <HistoryRoute history={browserHistory}>
 
       <Routes>
 
@@ -75,7 +75,7 @@ function App(): JSX.Element {
           </Route>
 
           <Route
-            path="*"
+            path={AppRoute.NotFound}
             element={
               <NotFoundPage />
             }
@@ -85,7 +85,7 @@ function App(): JSX.Element {
 
       </Routes>
 
-    </HistoryRouter>
+    </HistoryRoute>
   );
 }
 

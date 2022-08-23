@@ -1,11 +1,8 @@
-import { Film } from '../../types/film';
+import { useAppSelector } from '../../hooks';
 import { FilmRating, FilmRatingCheck } from '../../util/const';
 
-type FilmOverviewProps = {
-  film: Film;
-}
-
-function FilmOverview({film}: FilmOverviewProps): JSX.Element{
+function FilmOverviewSection(): JSX.Element | null {
+  const film = useAppSelector((state) => state.film);
 
   const getRatingDescription = (rating: number) => {
     if (FilmRatingCheck.isAwesome(rating)) {return FilmRating.Awesome;}
@@ -42,15 +39,14 @@ function FilmOverview({film}: FilmOverviewProps): JSX.Element{
     return `${array.slice(0, (maxStarsInString)).join(', ')}${starsStringSuffix}`;
   };
 
-  return (
+  return (film === null) ? null : (
     <>
       <div className="film-rating">
         <div className="film-rating__score">{film.rating.toLocaleString('ru')}</div>
         <p className="film-rating__meta">
           <span className="film-rating__level">{getRatingDescription(film.rating)}</span>
           <span className="film-rating__count">
-            {film.scoresCount}
-            {(film.scoresCount <= 1 ) ? ' rating' : ' ratings'}
+            {`${film.scoresCount} ${(film.scoresCount <= 1 ) ? ' rating' : ' ratings'}`}
           </span>
         </p>
       </div>
@@ -59,13 +55,12 @@ function FilmOverview({film}: FilmOverviewProps): JSX.Element{
 
         {getFilmDescription(film.description)}
 
-        <p className="film-card__director"><strong>Director: {film.director}</strong></p>
-        <p className="film-card__starring"><strong>Starring: {getStarringList(film.starring)}</strong>
+        <p className="film-card__director"><strong>{`Director: ${film.director}`}</strong></p>
+        <p className="film-card__starring"><strong>{`Starring: ${getStarringList(film.starring)}`}</strong>
         </p>
       </div>
     </>
   );
 }
 
-export default FilmOverview;
-
+export default FilmOverviewSection;

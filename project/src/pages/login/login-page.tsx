@@ -1,5 +1,4 @@
 import { FormEvent, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Footer from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
 import { useAppDispatch } from '../../hooks';
@@ -11,7 +10,6 @@ function LoginPage(): JSX.Element {
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
@@ -68,7 +66,6 @@ function LoginPage(): JSX.Element {
           <div className="sign-in__submit">
             <button
               className="sign-in__btn"
-              onClick={() => navigate(-1)}
               type="submit"
             >
               Sign in

@@ -1,9 +1,16 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks';
+import { addFilmCommentAction } from '../../store/api-actions';
+import { CommentData } from '../../types/comment-data';
 import ReviewFormStar from '../review-form-star/review-form-star';
 
 function ReviewForm(): JSX.Element {
+  const {id} = useParams();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [formData, setFormData] = useState({
-    reviewText: '',
+    commentText: '',
     rating: null,
   });
 
@@ -22,9 +29,29 @@ function ReviewForm(): JSX.Element {
     setFormData({...formData, [name]: value});
   };
 
+  const onSubmitHandler = (commentData: CommentData) => {
+    dispatch(addFilmCommentAction(commentData));
+  };
+
+  const formSubmitHandler = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    const {commentText, rating} = formData;
+    if (commentText !== null) {
+      onSubmitHandler({
+        filmId: String(id),
+        comment: commentText,
+        rating: Number(rating),
+      });
+    }
+  };
+
   return (
     <div className="add-review">
-      <form action="#" className="add-review__form">
+      <form
+        action=""
+        className="add-review__form"
+        onSubmit={formSubmitHandler}
+      >
         <div className="rating">
           <div onChange={ratingInputClickHandler} className="rating__stars">
             {starsButtonList}
@@ -32,13 +59,22 @@ function ReviewForm(): JSX.Element {
         </div>
 
         <div className="add-review__text">
-          <textarea onChange={fieldChangeHandler} value={formData.reviewText}
-            className="add-review__textarea" name="reviewText" id="review-text"
+          <textarea
+            onChange={fieldChangeHandler}
+            className="add-review__textarea"
+            name="commentText"
+            id="comment-text"
             placeholder="Review text"
           >
           </textarea>
           <div className="add-review__submit">
-            <button className="add-review__btn" type="submit">Post</button>
+            <button
+              className="add-review__btn"
+              onClick={() => navigate(-1)}
+              type="submit"
+            >
+              Post
+            </button>
           </div>
 
         </div>

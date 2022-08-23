@@ -1,13 +1,33 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { Genre, FILM_COUNT_STEP, AuthorizationStatus } from '../util/const';
-import { changeGenre, incrFilmsCount, resetFilmsCount, reset, loadFilms, requireAuthorization, setDataLoadingStatus, setGenreFilmsCount, setUserData, clearUserData, loadPromo } from './action';
+import { changeGenre,
+  incrFilmsCount,
+  resetFilmsCount,
+  reset,
+  loadFilms,
+  requireAuthorization,
+  setDataLoadingStatus,
+  setGenreFilmsCount,
+  setUserData,
+  clearUserData,
+  loadPromo,
+  loadFilm,
+  loadFavoriteFilms,
+  loadSimilarFilms,
+  loadFilmComments
+} from './action';
 import { Film, Films } from '../types/film';
 import { UserInfo } from '../types/user-info';
+import { Comments } from '../types/comment';
 
 type InitalState = {
   genre: string,
   films: Films,
+  favoriteFilms: Films,
+  similarFilms: Films,
   promo: Film | null,
+  film: Film | null,
+  comments: Comments,
   filmsToRenderCount: number,
   genreFilmsCount: number,
   authorizationStatus: AuthorizationStatus,
@@ -18,7 +38,11 @@ type InitalState = {
 const initialState: InitalState = {
   genre: Genre.AllGenres,
   films: [],
+  favoriteFilms: [],
+  similarFilms: [],
   promo: null,
+  film: null,
+  comments: [],
   filmsToRenderCount: FILM_COUNT_STEP,
   genreFilmsCount: FILM_COUNT_STEP,
   authorizationStatus: AuthorizationStatus.Unknown,
@@ -49,8 +73,20 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(loadFilms, (state, { payload }) => {
       state.films = payload;
     })
+    .addCase(loadFavoriteFilms, (state, { payload }) => {
+      state.favoriteFilms = payload;
+    })
+    .addCase(loadSimilarFilms, (state, { payload }) => {
+      state.similarFilms = payload;
+    })
     .addCase(loadPromo, (state, { payload }) => {
       state.promo = payload;
+    })
+    .addCase(loadFilm, (state, { payload }) => {
+      state.film = payload;
+    })
+    .addCase(loadFilmComments, (state, { payload }) => {
+      state.comments = payload;
     })
     .addCase(setDataLoadingStatus, (state, { payload }) => {
       state.isDataLoading = payload;
