@@ -1,19 +1,31 @@
+import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import FilmInfoSections from '../../components/film-info-sections/film-info-sections';
 import FilmsList from '../../components/films-list/films-list';
 import Logo from '../../components/logo/logo';
 import SomeComp from '../../components/some-comp/some-comp';
 import UserBlock from '../../components/user-block/user-block';
 import { useAppSelector } from '../../hooks';
+import { store } from '../../store';
+import { fetchFilmAction, fetchFilmCommentsAction, fetchSimilarFilmsAction } from '../../store/api-actions';
 import { AppRoute, FilmsCatalogState } from '../../util/const';
 import NotFoundPage from '../not-found-page/not-found-page';
+import FilmInfoTab from '../../components/film-info-tab/film-info-tab';
+import MyListButton from '../../components/my-list-button/my-list-button';
+import ReviewButton from '../../components/review-button/review-button';
 
 
 function FilmPage(): JSX.Element {
   const {id} = useParams();
-  const {films} = useAppSelector((state) => state); // Заменить на соответствующий API
-  const film = films.find((item) => item.id === Number(id));
-  const linkStyle = {textDecoration: 'none'};
+  const film = useAppSelector((state) => state.film);
+  const similarFilms = useAppSelector((state) => state.similarFilms);
+
+  useEffect(() => {
+    if (typeof film?.id === 'undefined' || (`${film?.id}` !== `${id}`)){
+      store.dispatch(fetchFilmAction(`${id}`));
+      store.dispatch(fetchSimilarFilmsAction(`${id}`));
+      store.dispatch(fetchFilmCommentsAction(`${id}`));
+    }
+  }, [id, film]);
 
   if (!film){
     return (
@@ -54,16 +66,8 @@ function FilmPage(): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </Link>
-
-                <Link to={`${AppRoute.MyList}`} className="btn btn--list film-card__button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span style={linkStyle}>My list</span>
-                  <span className="film-card__count">9</span>
-                </Link>
-
-                <Link to={`${AppRoute.Film}${film.id}${AppRoute.AddReview}`} className="btn film-card__button">Add review</Link>
+                <MyListButton />
+                <ReviewButton />
               </div>
             </div>
           </div>
@@ -74,13 +78,13 @@ function FilmPage(): JSX.Element {
             <div className="film-card__poster film-card__poster--big">
               <img src={film.posterImage} alt={film.name} width="218" height="327"/>
             </div>
-            <FilmInfoSections film={film} />
+            <FilmInfoTab />
           </div>
         </div>
       </section>
 
       <div className="page-content">
-        <FilmsList films={films} state={FilmsCatalogState.MoreLikeThis} />
+        <FilmsList films={similarFilms} state={FilmsCatalogState.MoreLikeThis} />
       </div>
     </>
   );

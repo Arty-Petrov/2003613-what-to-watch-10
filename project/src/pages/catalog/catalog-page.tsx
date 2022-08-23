@@ -10,6 +10,7 @@ import { useAppSelector } from '../../hooks';
 import { setGenreFilmsCount } from '../../store/action';
 import { AppRoute, FilmsCatalogState } from '../../util/const';
 import { Filter } from '../../util/filters';
+import MyListButton from '../../components/my-list-button/my-list-button';
 
 function CatalogPage(): JSX.Element | null{
   const dispatch = useDispatch();
@@ -58,13 +59,7 @@ function CatalogPage(): JSX.Element | null{
                   </svg>
                   <span>Play</span>
                 </Link>
-                <Link to={`${AppRoute.MyList}`} className="btn btn--list film-card__button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
-                </Link>
+                <MyListButton />
               </div>
             </div>
           </div>

@@ -1,5 +1,5 @@
 import './user-block.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import { store } from '../../store';
 import { logoutAction } from '../../store/api-actions';
@@ -13,9 +13,11 @@ function UserBlock(): JSX.Element {
 
   const AvatarBlock = (): JSX.Element | null => (userInfo === null) ? null : (
     <li className="user-block__item">
-      <div className="user-block__avatar">
-        <img src={userInfo.avatarUrl} alt={`${userInfo.userName} avatar`} width="63" height="63" />
-      </div>
+      <Link to={`${AppRoute.MyList}`}>
+        <div className="user-block__avatar">
+          <img src={userInfo.avatarUrl} alt={`${userInfo.userName} avatar`} width="63" height="63" />
+        </div>
+      </Link>
     </li>
   );
 

@@ -14,9 +14,9 @@ import HistoryRouter from '../history-route/history-route';
 import PrivateRoute from '../private-route/private-route';
 
 function App(): JSX.Element {
-  const {isDataLoading} = useAppSelector((state) => state);
+  const loadingStatus = useAppSelector((state) => state.isDataLoading);
 
-  if (isDataLoading) {
+  if (loadingStatus) {
     return (
       <LoadingScreen />
     );

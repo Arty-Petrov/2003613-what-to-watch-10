@@ -8,4 +8,4 @@ export type Comment = {
   user: Pick<UserData, 'id' | 'name'>;
 };
 
-export default Comment;
+export type Comments = Comment[];

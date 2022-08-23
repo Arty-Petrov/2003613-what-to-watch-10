@@ -1,10 +1,8 @@
-import Comment from '../../types/comment';
-
-type FilmReviewCommentProps = {
-  comment: Comment;
-}
-
-function FilmReviewComment({comment}: FilmReviewCommentProps): JSX.Element {
+import { Comment } from '../../types/comment';
+type CommentProps = {
+  comment: Comment,
+};
+function FilmReviewComment({comment}: CommentProps): JSX.Element {
   return (
     <div className="review">
       <blockquote className="review__quote">
