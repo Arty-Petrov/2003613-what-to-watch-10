@@ -5,10 +5,6 @@ import { FavoriteData } from '../../types/favorite-data';
 import { AppRoute, AuthorizationStatus } from '../../util/const';
 import { useLocation } from 'react-router-dom';
 
-//Доработать функионал кнопки. Нужно чтобы она отображала
-//информацию о статусе фильма и о количестве фильмов
-//в списке избранного
-
 const MyListButton = (): JSX.Element | null => {
   const location = useLocation();
   const promoFieldName = 'promo';
@@ -20,7 +16,8 @@ const MyListButton = (): JSX.Element | null => {
   const film = useAppSelector((state) => state[filmStoreFieldName]);
   const favoriteFilms = useAppSelector((state) => state.favoriteFilms);
 
-  if (authorizationStatus !== AuthorizationStatus.Auth) {
+  const isUnauthorised = authorizationStatus !== AuthorizationStatus.Auth;
+  if (isUnauthorised) {
     return null;
   }
 

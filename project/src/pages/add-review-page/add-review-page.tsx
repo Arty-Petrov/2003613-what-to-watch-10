@@ -1,4 +1,5 @@
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
+import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Logo from '../../components/logo/logo';
 import ReviewForm from '../../components/review-form/review-form';
 import UserBlock from '../../components/user-block/user-block';
@@ -6,9 +7,8 @@ import { useAppSelector } from '../../hooks';
 import NotFoundPage from '../not-found-page/not-found-page';
 
 function AddReviewPage(): JSX.Element {
-  const {id} = useParams();
-  const {films} = useAppSelector((state) => state); // Заменить на соответствующий API
-  const film = films.find((item) => item.id === Number(id));
+  // const {id} = useParams();
+  const film = useAppSelector((state) => state.film);
 
   if (!film){
     return (
@@ -26,17 +26,7 @@ function AddReviewPage(): JSX.Element {
 
         <header className="page-header">
           <Logo />
-
-          <nav className="breadcrumbs">
-            <ul className="breadcrumbs__list">
-              <li className="breadcrumbs__item">
-                <a href="film-page.html" className="breadcrumbs__link">{film.name}</a>
-              </li>
-              <li className="breadcrumbs__item">
-                <a href="/" className="breadcrumbs__link">Add review</a>
-              </li>
-            </ul>
-          </nav>
+          <Breadcrumbs />
           <UserBlock />
         </header>
 
