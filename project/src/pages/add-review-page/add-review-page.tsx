@@ -7,7 +7,6 @@ import { useAppSelector } from '../../hooks';
 import NotFoundPage from '../not-found-page/not-found-page';
 
 function AddReviewPage(): JSX.Element {
-  // const {id} = useParams();
   const film = useAppSelector((state) => state.film);
 
   if (!film){

@@ -7,8 +7,6 @@ import FilmReviewSection from '../film-review-section/film-review-section';
 
 function FilmInfoTab(): JSX.Element{
   const [activeSectionType, setActiveSectionType] = useState<string>(FilmInfoSection.Overview);
-  // eslint-disable-next-line no-console
-  console.log('state',activeSectionType);
 
   const setFilmInfoSection = (): JSX.Element | undefined => {
     switch (activeSectionType) {

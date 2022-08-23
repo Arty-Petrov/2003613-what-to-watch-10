@@ -34,6 +34,7 @@ export enum AppRoute {
   Player = '/player',
   Film = '/films/',
   AddReview = '/review',
+  NotFound = '/not-found',
 }
 
 export enum AuthorizationStatus {

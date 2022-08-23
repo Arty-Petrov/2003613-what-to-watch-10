@@ -3,6 +3,7 @@ import { AxiosInstance } from 'axios';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
 import { Comments } from '../types/comment';
+import { CommentData } from '../types/comment-data';
 import { FavoriteData } from '../types/favorite-data';
 import { Film, FilmId, Films } from '../types/film';
 import { AppDispatch, State } from '../types/state';
@@ -20,7 +21,7 @@ import {
   loadFilm,
   loadFilmComments,
   loadSimilarFilms,
-  loadFavoriteFilms
+  loadFavoriteFilms,
 } from './action';
 
 type ThunkProps = {
@@ -60,10 +61,16 @@ export const fetchPromoFilmAction = createAsyncThunk<void, undefined, ThunkProps
 export const fetchFilmAction = createAsyncThunk<void, FilmId, ThunkProps>(
   'data/fetchFilm',
   async (filmId, {dispatch, extra: api}) => {
-    dispatch(setDataLoadingStatus(true));
-    const {data} = await api.get<Film>(`${APIRoute.Film}/${filmId}`);
-    dispatch(loadFilm(data));
-    dispatch(setDataLoadingStatus(false));
+    try {
+      dispatch(setDataLoadingStatus(true));
+      const {data} = await api.get<Film>(`${APIRoute.Film}/${filmId}`);
+      dispatch(loadFilm(data));
+      dispatch(setDataLoadingStatus(false));
+    } catch {
+      dispatch(setDataLoadingStatus(false));
+      dispatch(redirectToRoute(AppRoute.NotFound));
+      throw new Error('Unable to load film');
+    }
   },
 );
 
@@ -89,6 +96,14 @@ export const setFilmFavoriteAction = createAsyncThunk<void, FavoriteData, ThunkP
   'data/setFilmFavoriteAction',
   async ({filmId, status}, {dispatch, extra: api}) => {
     await api.post<Film>(`${APIRoute.Favorite}/${filmId}/${status}`);
+  },
+);
+
+export const addFilmCommentAction = createAsyncThunk<void, CommentData, ThunkProps>(
+  'data/addFilmCommentAction',
+  async ({filmId, comment, rating}, {dispatch, extra: api}) => {
+    const {data} = await api.post<Comments>(`${APIRoute.Comments}/${filmId}`, {comment, rating});
+    dispatch(loadFilmComments(data));
   },
 );
 
