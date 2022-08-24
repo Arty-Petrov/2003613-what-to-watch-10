@@ -7,7 +7,7 @@ import UserBlock from '../../components/user-block/user-block';
 import { useAppSelector } from '../../hooks';
 import { store } from '../../store';
 import { fetchFilmAction, fetchFilmCommentsAction, fetchSimilarFilmsAction } from '../../store/api-actions';
-import { AppRoute, FilmsCatalogState } from '../../util/const';
+import { AppRoute, FilmsCatalogState, LogoState } from '../../util/const';
 import FilmInfoTab from '../../components/film-info-tab/film-info-tab';
 import MyListButton from '../../components/my-list-button/my-list-button';
 import ReviewButton from '../../components/review-button/review-button';
@@ -18,6 +18,9 @@ function FilmPage(): JSX.Element {
   const film = useAppSelector((state) => state.film);
   const similarFilms = useAppSelector((state) => state.similarFilms);
   const navigate = useNavigate();
+  const style = {
+    backgroundColor: `${film?.backgroundColor}`
+  };
 
   useEffect(() => {
     if (typeof film?.id === 'undefined' || (`${film?.id}` !== `${id}`)){
@@ -34,7 +37,7 @@ function FilmPage(): JSX.Element {
   return (
     <>
       <SomeComp addElement={false}/>
-      <section className="film-card film-card--full">
+      <section className="film-card film-card--full" style={style}>
         <div className="film-card__hero">
           <div className="film-card__bg">
             <img src={film?.backgroundImage} alt={film?.name} />
@@ -43,7 +46,7 @@ function FilmPage(): JSX.Element {
           <h1 className="visually-hidden">WTW</h1>
 
           <header className="page-header film-card__head">
-            <Logo />
+            <Logo renderPlace={LogoState.Header}/>
             <UserBlock />
 
           </header>

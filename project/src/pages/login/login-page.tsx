@@ -4,6 +4,7 @@ import Logo from '../../components/logo/logo';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
+import { LogoState } from '../../util/const';
 
 function LoginPage(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -27,7 +28,7 @@ function LoginPage(): JSX.Element {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
-        <Logo />
+        <Logo renderPlace={LogoState.Header}/>
         <h1 className="page-title user-page__title">Sign in</h1>
       </header>
 

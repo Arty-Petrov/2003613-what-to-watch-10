@@ -8,7 +8,7 @@ import SomeComp from '../../components/some-comp/some-comp';
 import UserBlock from '../../components/user-block/user-block';
 import { useAppSelector } from '../../hooks';
 import { setGenreFilmsCount } from '../../store/action';
-import { AppRoute, FilmsCatalogState } from '../../util/const';
+import { AppRoute, FilmsCatalogState, LogoState } from '../../util/const';
 import { Filter } from '../../util/filters';
 import MyListButton from '../../components/my-list-button/my-list-button';
 
@@ -35,7 +35,7 @@ function CatalogPage(): JSX.Element | null{
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header film-card__head">
-          <Logo />
+          <Logo renderPlace={LogoState.Header}/>
           <UserBlock />
         </header>
 

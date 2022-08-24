@@ -100,21 +100,7 @@ export enum APIRoute {
   Logout = '/logout',
 }
 
-// export const LogoState = {
-//   mainPageHead: {
-//     logoStyle: '',
-//     logoLink: '',
-//   },
-//   mainPageFooter: {
-//     logoStyle: 'logo__link--light',
-//     logoLink: '',
-//   },
-//   otherPageHead: {
-//     logoStyle: '',
-//     logoLink: '/',
-//   },
-//   otherPageFooter:{
-//     logoStyle: 'logo__link--light',
-//     logoLink: '/',
-//   },
-// };
+export enum LogoState {
+  Header = 'header',
+  Footer = 'footer',
+}
