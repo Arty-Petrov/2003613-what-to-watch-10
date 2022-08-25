@@ -1,3 +1,4 @@
+import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { incrFilmsCount } from '../../store/action';
 import { store } from '../../store/index';
@@ -21,4 +22,4 @@ function ShowMoreButton(): JSX.Element | null{
   return null;
 }
 
-export default ShowMoreButton;
+export default React.memo(ShowMoreButton);

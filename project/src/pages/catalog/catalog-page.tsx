@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 import FilmsList from '../../components/films-list/films-list';
 import Footer from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
@@ -8,9 +7,10 @@ import SomeComp from '../../components/some-comp/some-comp';
 import UserBlock from '../../components/user-block/user-block';
 import { useAppSelector } from '../../hooks';
 import { setGenreFilmsCount } from '../../store/action';
-import { AppRoute, FilmsCatalogState, LogoState } from '../../util/const';
+import { FilmsCatalogState, LogoState } from '../../util/const';
 import { Filter } from '../../util/filters';
 import MyListButton from '../../components/my-list-button/my-list-button';
+import PlayButton from '../../components/play-button/play-button';
 
 function CatalogPage(): JSX.Element | null{
   const dispatch = useDispatch();
@@ -53,12 +53,7 @@ function CatalogPage(): JSX.Element | null{
               </p>
 
               <div className="film-card__buttons">
-                <Link to={`${AppRoute.Player}/${promo.id}`} className="btn btn--play film-card__button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </Link>
+                <PlayButton film={promo} />
                 <MyListButton />
               </div>
             </div>

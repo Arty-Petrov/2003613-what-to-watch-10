@@ -4,6 +4,7 @@ import { useAppSelector } from '../../hooks';
 import { store } from '../../store';
 import { logoutAction } from '../../store/api-actions';
 import { AppRoute, AuthorizationStatus } from '../../util/const';
+import React from 'react';
 
 function UserBlock(): JSX.Element {
   const {userInfo, authorizationStatus} = useAppSelector((state) => state);
@@ -45,5 +46,5 @@ function UserBlock(): JSX.Element {
   );
 }
 
-export default UserBlock;
+export default React.memo(UserBlock);
 

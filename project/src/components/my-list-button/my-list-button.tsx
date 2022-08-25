@@ -4,19 +4,26 @@ import { fetchFavoriteFilmsAction, fetchFilmAction, fetchPromoFilmAction, setFil
 import { FavoriteData } from '../../types/favorite-data';
 import { AppRoute, AuthorizationStatus } from '../../util/const';
 import { useLocation } from 'react-router-dom';
+import React from 'react';
+import { useAppDispatch } from '../../hooks/index';
+
+const PROMO_FIELD_NAME = 'promo';
+const FILM_FIELD_NAME = 'film';
 
 const MyListButton = (): JSX.Element | null => {
   const location = useLocation();
-  const promoFieldName = 'promo';
-  const filmFieldName = 'film';
+  const dispatch = useAppDispatch();
   const filmStoreFieldName = (location.pathname === AppRoute.Root)
-    ? promoFieldName
-    : filmFieldName;
+    ? PROMO_FIELD_NAME
+    : FILM_FIELD_NAME;
+
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const film = useAppSelector((state) => state[filmStoreFieldName]);
+
   const favoriteFilms = useAppSelector((state) => state.favoriteFilms);
 
   const isUnauthorised = authorizationStatus !== AuthorizationStatus.Auth;
+
   if (isUnauthorised) {
     return null;
   }
@@ -29,14 +36,15 @@ const MyListButton = (): JSX.Element | null => {
         filmId: String(film.id),
         status: Number(!film.isFavorite),
       };
-      store.dispatch(setFilmFavoriteAction(favoriteData));
-      store.dispatch(fetchFavoriteFilmsAction());
+      dispatch(setFilmFavoriteAction(favoriteData));
+      dispatch(fetchFavoriteFilmsAction());
+
       switch (filmStoreFieldName) {
-        case promoFieldName:
+        case PROMO_FIELD_NAME:
           store.dispatch(fetchPromoFilmAction());
           break;
-        case filmFieldName:
-          store.dispatch(fetchFilmAction(String(film.id)));
+        case FILM_FIELD_NAME:
+          dispatch(fetchFilmAction(String(film.id)));
           break;
       }
     }
@@ -52,9 +60,8 @@ const MyListButton = (): JSX.Element | null => {
       <use xlinkHref="#add"></use>
     </svg>);
 
-  if (authorizationStatus !== AuthorizationStatus.Auth) {
-    return null;
-  }
+  // eslint-disable-next-line no-console
+  console.log(film?.isFavorite);
 
   return (
     <button onClick={onMyListButtonClickHandler} className="btn btn--list film-card__button">
@@ -65,4 +72,4 @@ const MyListButton = (): JSX.Element | null => {
   );
 };
 
-export default MyListButton;
+export default React.memo(MyListButton);

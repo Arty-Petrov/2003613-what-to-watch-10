@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { LogoState } from '../../util/const';
 
@@ -20,4 +21,4 @@ function Logo({renderPlace}:LogoProps): JSX.Element {
   );
 }
 
-export default Logo;
+export default React.memo(Logo);

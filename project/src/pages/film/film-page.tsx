@@ -1,20 +1,22 @@
 import { useEffect } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import FilmInfoTab from '../../components/film-info-tab/film-info-tab';
 import FilmsList from '../../components/films-list/films-list';
 import Logo from '../../components/logo/logo';
+import MyListButton from '../../components/my-list-button/my-list-button';
+import PlayButton from '../../components/play-button/play-button';
+import ReviewButton from '../../components/review-button/review-button';
 import SomeComp from '../../components/some-comp/some-comp';
 import UserBlock from '../../components/user-block/user-block';
 import { useAppSelector } from '../../hooks';
-import { store } from '../../store';
+import { useAppDispatch } from '../../hooks/index';
 import { fetchFilmAction, fetchFilmCommentsAction, fetchSimilarFilmsAction } from '../../store/api-actions';
 import { AppRoute, FilmsCatalogState, LogoState } from '../../util/const';
-import FilmInfoTab from '../../components/film-info-tab/film-info-tab';
-import MyListButton from '../../components/my-list-button/my-list-button';
-import ReviewButton from '../../components/review-button/review-button';
 
 
 function FilmPage(): JSX.Element {
   const {id} = useParams();
+  const dispatch = useAppDispatch();
   const film = useAppSelector((state) => state.film);
   const similarFilms = useAppSelector((state) => state.similarFilms);
   const navigate = useNavigate();
@@ -23,12 +25,12 @@ function FilmPage(): JSX.Element {
   };
 
   useEffect(() => {
-    if (typeof film?.id === 'undefined' || (`${film?.id}` !== `${id}`)){
-      store.dispatch(fetchFilmAction(`${id}`));
-      store.dispatch(fetchSimilarFilmsAction(`${id}`));
-      store.dispatch(fetchFilmCommentsAction(`${id}`));
+    if (typeof film?.id === 'undefined' || (String(film?.id) !== id)){
+      dispatch(fetchFilmAction(`${id}`));
+      dispatch(fetchSimilarFilmsAction(`${id}`));
+      dispatch(fetchFilmCommentsAction(`${id}`));
     }
-  }, [id, film]);
+  }, [dispatch, id, film]);
 
   if (film === undefined){
     navigate(AppRoute.NotFound);
@@ -61,12 +63,7 @@ function FilmPage(): JSX.Element {
 
               <div className="film-card__buttons">
 
-                <Link to={`${AppRoute.Player}/${film?.id}`} className="btn btn--play film-card__button" >
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </Link>
+                <PlayButton film={film} />
                 <MyListButton />
                 <ReviewButton />
               </div>

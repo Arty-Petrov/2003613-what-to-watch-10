@@ -87,22 +87,28 @@ export const fetchSimilarFilmsAction = createAsyncThunk<void, FilmId, ThunkProps
 export const fetchFilmCommentsAction = createAsyncThunk<void, FilmId, ThunkProps>(
   'data/fetchFilm',
   async (filmId, {dispatch, extra: api}) => {
+    dispatch(setDataLoadingStatus(true));
     const {data} = await api.get<Comments>(`${APIRoute.Comments}/${filmId}`);
     dispatch(loadFilmComments(data));
+    dispatch(setDataLoadingStatus(false));
   },
 );
 
 export const setFilmFavoriteAction = createAsyncThunk<void, FavoriteData, ThunkProps>(
   'data/setFilmFavoriteAction',
   async ({filmId, status}, {dispatch, extra: api}) => {
+    dispatch(setDataLoadingStatus(true));
     await api.post<Film>(`${APIRoute.Favorite}/${filmId}/${status}`);
+    dispatch(setDataLoadingStatus(false));
   },
 );
 
 export const addFilmCommentAction = createAsyncThunk<void, CommentData, ThunkProps>(
   'data/addFilmCommentAction',
   async ({filmId, comment, rating}, {dispatch, extra: api}) => {
+    dispatch(setDataLoadingStatus(true));
     const {data} = await api.post<Comments>(`${APIRoute.Comments}/${filmId}`, {comment, rating});
+    dispatch(setDataLoadingStatus(false));
     dispatch(loadFilmComments(data));
   },
 );
