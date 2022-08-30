@@ -1,10 +1,11 @@
 import { AppRoute } from '../../util/const';
 import { Link, useParams } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
+import { getFilm } from '../../store/film-process/selector';
 
 const Breadcrumbs = ():JSX.Element => {
   const {id} = useParams();
-  const film = useAppSelector((state) => state.film);
+  const film = useAppSelector(getFilm);
 
   return (
     <nav className="breadcrumbs">

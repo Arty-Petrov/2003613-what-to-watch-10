@@ -1,35 +1,45 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import FilmsList from '../../components/films-list/films-list';
 import Footer from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
+import MyListButton from '../../components/my-list-button/my-list-button';
+import PlayButton from '../../components/play-button/play-button';
 import SomeComp from '../../components/some-comp/some-comp';
 import UserBlock from '../../components/user-block/user-block';
 import { useAppSelector } from '../../hooks';
-import { setGenreFilmsCount } from '../../store/action';
+import { useAppDispatch } from '../../hooks/index';
+import { setPromoToFilmField } from '../../store/film-process/film-process';
+import { getDataLoadingStatus, getPromoFilm } from '../../store/film-process/selector';
+import { setActiveGenre } from '../../store/films-process/films-process';
+import { getFilmsToRender, getGetActiveGenre } from '../../store/films-process/selector';
 import { FilmsCatalogState, LogoState } from '../../util/const';
-import { Filter } from '../../util/filters';
-import MyListButton from '../../components/my-list-button/my-list-button';
-import PlayButton from '../../components/play-button/play-button';
 
 function CatalogPage(): JSX.Element | null{
-  const dispatch = useDispatch();
-  const { genre, filmsToRenderCount, films, promo } = useAppSelector((state) => state);
-  const genreFilms = Filter[genre](films);
-  const filmsToRender = genreFilms.slice(0, filmsToRenderCount);
-  const genreFilmsCount = genreFilms.length;
+  const dispatch = useAppDispatch();
+  const isDataloading = useAppSelector(getDataLoadingStatus);
+  const promo = useAppSelector(getPromoFilm);
+  const genre = useAppSelector(getGetActiveGenre);
+
+  const filmsToRender = useAppSelector(getFilmsToRender);
+  const genreFilmsCount = (filmsToRender !== null) ? filmsToRender.length : 0;
 
   useEffect(() => {
-    dispatch(setGenreFilmsCount(genreFilmsCount));
+    dispatch(setPromoToFilmField());
+  }
+  , [dispatch, promo]);
+
+  useEffect(() => {
+    dispatch(setActiveGenre(genre));
   }
   , [dispatch, genre, genreFilmsCount,]);
 
-  return (promo === null) ? null : (
+
+  return (promo === null && !isDataloading) ? null : (
     <>
       <SomeComp addElement={false} />
       <section className="film-card">
         <div className="film-card__bg">
-          <img src={promo.backgroundImage} alt={promo.name} />
+          <img src={promo?.backgroundImage} alt={promo?.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -42,14 +52,14 @@ function CatalogPage(): JSX.Element | null{
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src={promo.posterImage} alt={`${promo.name} poster`} width="218" height="327" />
+              <img src={promo?.posterImage} alt={`${promo?.name} poster`} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{promo.name}</h2>
+              <h2 className="film-card__title">{promo?.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{promo.genre}</span>
-                <span className="film-card__year">{promo.released}</span>
+                <span className="film-card__genre">{promo?.genre}</span>
+                <span className="film-card__year">{promo?.released}</span>
               </p>
 
               <div className="film-card__buttons">

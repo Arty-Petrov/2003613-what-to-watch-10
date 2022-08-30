@@ -12,13 +12,14 @@ import { useAppSelector } from '../../hooks';
 import { useAppDispatch } from '../../hooks/index';
 import { fetchFilmAction, fetchFilmCommentsAction, fetchSimilarFilmsAction } from '../../store/api-actions';
 import { AppRoute, FilmsCatalogState, LogoState } from '../../util/const';
+import { getFilm, getSimilarFilms } from '../../store/film-process/selector';
 
 
 function FilmPage(): JSX.Element {
   const {id} = useParams();
   const dispatch = useAppDispatch();
-  const film = useAppSelector((state) => state.film);
-  const similarFilms = useAppSelector((state) => state.similarFilms);
+  const film = useAppSelector(getFilm);
+  const similarFilms = useAppSelector(getSimilarFilms);
   const navigate = useNavigate();
   const style = {
     backgroundColor: `${film?.backgroundColor}`
@@ -26,9 +27,9 @@ function FilmPage(): JSX.Element {
 
   useEffect(() => {
     if (typeof film?.id === 'undefined' || (String(film?.id) !== id)){
-      dispatch(fetchFilmAction(`${id}`));
-      dispatch(fetchSimilarFilmsAction(`${id}`));
-      dispatch(fetchFilmCommentsAction(`${id}`));
+      dispatch(fetchFilmAction(id));
+      dispatch(fetchSimilarFilmsAction(id));
+      dispatch(fetchFilmCommentsAction(id));
     }
   }, [dispatch, id, film]);
 

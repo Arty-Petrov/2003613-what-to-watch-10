@@ -5,7 +5,7 @@ import GenreList from '../genre-list/genre-list';
 import ShowMoreButton from '../show-more-button/show-more-button';
 
 type FilmsListProps = {
-  films: Films;
+  films: Films | null;
   state: {
     headText: string,
     headStyle: string,
@@ -23,7 +23,7 @@ function FilmsList ({films, state}: FilmsListProps): JSX.Element {
       <h2 className={`catalog__title ${state.headStyle}`}>{state.headText}</h2>
       {(state.genreList) ? <GenreList /> : null}
       <div className="catalog__films-list">
-        {films.map((item) => (
+        {films?.map((item) => (
           <FilmCard
             key={item.id}
             film={item}

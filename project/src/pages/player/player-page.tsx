@@ -1,12 +1,24 @@
-import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
+import { getFilm } from '../../store/film-process/selector';
 import NotFoundPage from '../not-found-page/not-found-page';
+import { useEffect } from 'react';
+import { useAppDispatch } from '../../hooks/index';
+import { fetchFilmAction } from '../../store/api-actions';
+import { useParams } from 'react-router-dom';
 
 
 function PlayerPage (): JSX.Element {
   const {id} = useParams();
-  const {films} = useAppSelector((state) => state); // Заменить на соответствующий API
-  const film = films.find((item) => item.id === Number(id));
+  const dispatch = useAppDispatch();
+  const film = useAppSelector(getFilm);
+
+  useEffect(() => {
+    if (Number(id) !== film?.id) {
+      dispatch(fetchFilmAction(String(id)));
+    }
+  }, [dispatch, film?.id, id]
+  );
+
   const divStyle = {left: '30%'};
 
   if (!film){
@@ -17,7 +29,7 @@ function PlayerPage (): JSX.Element {
 
   return (
     <div className="player">
-      <video src="#" className="player__video" poster={film.posterImage}></video>
+      <video src="#" className="player__video" poster={film.backgroundImage}></video>
 
       <button type="button" className="player__exit">Exit</button>
 

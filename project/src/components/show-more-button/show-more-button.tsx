@@ -1,18 +1,18 @@
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { incrFilmsCount } from '../../store/action';
-import { store } from '../../store/index';
+import { increaseFilmsCount } from '../../store/films-process/films-process';
+import { getFilteredFilmsCount, getFilmsToRenderCount } from '../../store/films-process/selector';
 
 function ShowMoreButton(): JSX.Element | null{
   const dispatch = useAppDispatch();
-  const state = useAppSelector(store.getState);
-  const {genreFilmsCount, filmsToRenderCount,} = state;
+  const filteredFilmsCount = useAppSelector(getFilteredFilmsCount);
+  const filmsToRenderCount = useAppSelector(getFilmsToRenderCount);
 
   const handleButtonClick = () => {
-    dispatch(incrFilmsCount());
+    dispatch(increaseFilmsCount());
   };
 
-  if (genreFilmsCount >= filmsToRenderCount){
+  if (filteredFilmsCount !== null && filteredFilmsCount >= filmsToRenderCount){
     return (
       <div className="catalog__more">
         <button className="catalog__button" onClick={handleButtonClick} type="button">Show more</button>

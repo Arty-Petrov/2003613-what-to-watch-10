@@ -12,9 +12,10 @@ import PlayerPage from '../../pages/player/player-page';
 import { AppRoute } from '../../util/const';
 import HistoryRoute from '../history-route/history-route';
 import PrivateRoute from '../private-route/private-route';
+import { getDataLoadingStatus } from '../../store/films-process/selector';
 
 function App(): JSX.Element {
-  const loadingStatus = useAppSelector((state) => state.isDataLoading);
+  const loadingStatus = useAppSelector(getDataLoadingStatus);
 
   if (loadingStatus) {
     return (

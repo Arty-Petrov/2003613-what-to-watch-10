@@ -1,52 +1,43 @@
+import React, { useEffect } from 'react';
 import { useAppSelector } from '../../hooks';
-import { store } from '../../store';
+import { useAppDispatch } from '../../hooks/index';
 import { fetchFavoriteFilmsAction, fetchFilmAction, fetchPromoFilmAction, setFilmFavoriteAction } from '../../store/api-actions';
+import { getFavoriteFilms } from '../../store/favorite-process/selector';
+import { getFilm, getFilmFavoriteStatus } from '../../store/film-process/selector';
+import { getAuthorizationStatus } from '../../store/user-process/selector';
 import { FavoriteData } from '../../types/favorite-data';
 import { AppRoute, AuthorizationStatus } from '../../util/const';
-import { useLocation } from 'react-router-dom';
-import React from 'react';
-import { useAppDispatch } from '../../hooks/index';
-
-const PROMO_FIELD_NAME = 'promo';
-const FILM_FIELD_NAME = 'film';
+import { useNavigate } from 'react-router-dom';
 
 const MyListButton = (): JSX.Element | null => {
-  const location = useLocation();
   const dispatch = useAppDispatch();
-  const filmStoreFieldName = (location.pathname === AppRoute.Root)
-    ? PROMO_FIELD_NAME
-    : FILM_FIELD_NAME;
+  const navigate = useNavigate();
 
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const film = useAppSelector((state) => state[filmStoreFieldName]);
-
-  const favoriteFilms = useAppSelector((state) => state.favoriteFilms);
-
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isUnauthorised = authorizationStatus !== AuthorizationStatus.Auth;
+  const film = useAppSelector(getFilm);
+  const filmIsFavorite = useAppSelector(getFilmFavoriteStatus);
+  const favoriteFilms = useAppSelector(getFavoriteFilms);
 
-  if (isUnauthorised) {
-    return null;
-  }
+  const favoriteFilmsCount = (isUnauthorised) ? 0 : favoriteFilms?.length;
+  const isInFilmList = film?.isFavorite && !isUnauthorised;
 
-  const favoriteFilmsCount = (favoriteFilms === null) ? 0 : favoriteFilms.length;
+  useEffect(() => {
+    dispatch(fetchFavoriteFilmsAction());
+  }, [filmIsFavorite, dispatch]);
 
   const onMyListButtonClickHandler = () => {
+    if (isUnauthorised) {
+      navigate(AppRoute.Login);
+    }
     if (film !== null) {
       const favoriteData: FavoriteData = {
         filmId: String(film.id),
         status: Number(!film.isFavorite),
       };
       dispatch(setFilmFavoriteAction(favoriteData));
-      dispatch(fetchFavoriteFilmsAction());
-
-      switch (filmStoreFieldName) {
-        case PROMO_FIELD_NAME:
-          store.dispatch(fetchPromoFilmAction());
-          break;
-        case FILM_FIELD_NAME:
-          dispatch(fetchFilmAction(String(film.id)));
-          break;
-      }
+      dispatch(fetchPromoFilmAction());
+      dispatch(fetchFilmAction(String(film.id)));
     }
   };
 
@@ -60,12 +51,9 @@ const MyListButton = (): JSX.Element | null => {
       <use xlinkHref="#add"></use>
     </svg>);
 
-  // eslint-disable-next-line no-console
-  console.log(film?.isFavorite);
-
   return (
     <button onClick={onMyListButtonClickHandler} className="btn btn--list film-card__button">
-      {(film?.isFavorite) ? <InListMarker /> : <PlusMarker />}
+      {(isInFilmList) ? <InListMarker /> : <PlusMarker />}
       <span>My list</span>
       <span className="film-card__count">{favoriteFilmsCount}</span>
     </button>

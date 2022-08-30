@@ -1,3 +1,4 @@
+import React from 'react';
 import { LogoState } from '../../util/const';
 import Logo from '../logo/logo';
 
@@ -12,4 +13,4 @@ function Footer(): JSX.Element {
   );
 }
 
-export default Footer;
+export default React.memo(Footer);

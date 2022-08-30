@@ -1,22 +1,25 @@
 import './user-block.css';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAppSelector } from '../../hooks';
-import { store } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
 import { AppRoute, AuthorizationStatus } from '../../util/const';
 import React from 'react';
+import { getUserAvatar, getUserName, getAuthorizationStatus } from '../../store/user-process/selector';
 
 function UserBlock(): JSX.Element {
-  const {userInfo, authorizationStatus} = useAppSelector((state) => state);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const userName = useAppSelector(getUserName);
+  const avatarUrl = useAppSelector(getUserAvatar);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isAuthorised = (AuthorizationStatus.Auth === authorizationStatus);
   const userBlockLinkText = (isAuthorised) ? 'Sign out' : 'Log in';
 
-  const AvatarBlock = (): JSX.Element | null => (userInfo === null) ? null : (
+  const AvatarBlock = (): JSX.Element | null => (avatarUrl === '') ? null : (
     <li className="user-block__item">
       <Link to={`${AppRoute.MyList}`}>
         <div className="user-block__avatar">
-          <img src={userInfo.avatarUrl} alt={`${userInfo.userName} avatar`} width="63" height="63" />
+          <img src={avatarUrl} alt={`${userName} avatar`} width="63" height="63" />
         </div>
       </Link>
     </li>
@@ -24,7 +27,7 @@ function UserBlock(): JSX.Element {
 
   const handleClickButton = () => {
     if (isAuthorised){
-      store.dispatch(logoutAction());
+      dispatch(logoutAction());
     }
     (isAuthorised) ?
       navigate(AppRoute.Root)

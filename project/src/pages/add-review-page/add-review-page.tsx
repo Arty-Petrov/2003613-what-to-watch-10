@@ -6,9 +6,10 @@ import UserBlock from '../../components/user-block/user-block';
 import { useAppSelector } from '../../hooks';
 import NotFoundPage from '../not-found-page/not-found-page';
 import { LogoState } from '../../util/const';
+import { getFilm } from '../../store/film-process/selector';
 
 function AddReviewPage(): JSX.Element {
-  const film = useAppSelector((state) => state.film);
+  const film = useAppSelector(getFilm);
 
   if (!film){
     return (

@@ -1,4 +1,5 @@
 import { useAppSelector } from '../../hooks';
+import { getFilm } from '../../store/film-process/selector';
 import { convertMinutesToHM } from '../../util/utils';
 
 const getStarringsList = (stringsArray: string[]) => {
@@ -15,7 +16,7 @@ const getStarringsList = (stringsArray: string[]) => {
 };
 
 function FilmDetailsSection(): JSX.Element | null {
-  const film = useAppSelector((state) => state.film);
+  const film = useAppSelector(getFilm);
 
   return (film === null) ? null : (
     <div className="film-card__text film-card__row">
