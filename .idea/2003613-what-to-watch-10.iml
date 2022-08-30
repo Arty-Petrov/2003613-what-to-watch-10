@@ -5,8 +5,8 @@
       <excludeFolder url="file://$MODULE_DIR$/temp" />
       <excludeFolder url="file://$MODULE_DIR$/.tmp" />
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
-      <excludeFolder url="file://$MODULE_DIR$/project/src/pages/catalog" />
       <excludeFolder url="file://$MODULE_DIR$/project/src/pages/film-info" />
+      <excludeFolder url="file://$MODULE_DIR$/project/src/pages/catalog-page" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

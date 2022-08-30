@@ -4,7 +4,6 @@ import Footer from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
 import MyListButton from '../../components/my-list-button/my-list-button';
 import PlayButton from '../../components/play-button/play-button';
-import SomeComp from '../../components/some-comp/some-comp';
 import UserBlock from '../../components/user-block/user-block';
 import { useAppSelector } from '../../hooks';
 import { useAppDispatch } from '../../hooks/index';
@@ -36,7 +35,6 @@ function CatalogPage(): JSX.Element | null{
 
   return (promo === null && !isDataloading) ? null : (
     <>
-      <SomeComp addElement={false} />
       <section className="film-card">
         <div className="film-card__bg">
           <img src={promo?.backgroundImage} alt={promo?.name} />

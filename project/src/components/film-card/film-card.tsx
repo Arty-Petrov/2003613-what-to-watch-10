@@ -1,10 +1,8 @@
 import { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
-// import { store } from '../../store';
 import { Film } from '../../types/film';
 import { AppRoute } from '../../util/const';
 import VideoPlayer from '../video-player/video-player';
-// import { fetchFilmAction, fetchSimilarFilmsAction} from '../../store/api-actions';// fetchFilmCommentsAction,
 
 type FilmCardSmallProps = {
   film: Film,
