@@ -1,13 +1,18 @@
-import { FormEvent, useRef } from 'react';
+import { FormEvent, useEffect, useRef } from 'react';
 import Footer from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
+import { AppRoute, AuthorizationStatus, LogoState } from '../../util/const';
+import { getAuthorizationStatus } from '../../store/user-process/selector';
+import { useNavigate } from 'react-router-dom';
 
 function LoginPage(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+  const navigate = useNavigate();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const dispatch = useAppDispatch();
 
@@ -24,10 +29,17 @@ function LoginPage(): JSX.Element {
       });
     }
   };
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      navigate(AppRoute.Root);
+    }
+  }, [authorizationStatus, navigate]);
+
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
-        <Logo />
+        <Logo renderPlace={LogoState.Header}/>
         <h1 className="page-title user-page__title">Sign in</h1>
       </header>
 

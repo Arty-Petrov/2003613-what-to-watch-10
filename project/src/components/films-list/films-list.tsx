@@ -5,7 +5,7 @@ import GenreList from '../genre-list/genre-list';
 import ShowMoreButton from '../show-more-button/show-more-button';
 
 type FilmsListProps = {
-  films: Films;
+  films: Films | null;
   state: {
     headText: string,
     headStyle: string,
@@ -18,20 +18,19 @@ type FilmsListProps = {
 function FilmsList ({films, state}: FilmsListProps): JSX.Element {
   const [activeCardId, setActiveCardId] = useState<number | null>(null);
 
-  const activeCardIdHandler = (id: number | null) => {
-    setActiveCardId(id);
-    //заглушка чтобы линтер не ругался
-    // eslint-disable-next-line no-console
-    console.log(activeCardId);
-  };
-
   return(
     <section className="catalog">
       <h2 className={`catalog__title ${state.headStyle}`}>{state.headText}</h2>
       {(state.genreList) ? <GenreList /> : null}
       <div className="catalog__films-list">
-        {films.map((item) =>
-          <FilmCard key = {item.id} film = {item} callback={activeCardIdHandler}/>)}
+        {films?.map((item) => (
+          <FilmCard
+            key={item.id}
+            film={item}
+            activeCardId={activeCardId}
+            getActiveCardId={setActiveCardId}
+          />)
+        )}
       </div>
       {(state.moreButton) ? <ShowMoreButton /> : null}
     </section>

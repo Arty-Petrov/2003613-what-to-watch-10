@@ -1,8 +1,10 @@
 import { useAppSelector } from '../../hooks';
 import { FilmRating, FilmRatingCheck } from '../../util/const';
+import { getFilm } from '../../store/film-process/selector';
+import { convertNumToFormatedString } from '../../util/utils';
 
 function FilmOverviewSection(): JSX.Element | null {
-  const film = useAppSelector((state) => state.film);
+  const film = useAppSelector(getFilm);
 
   const getRatingDescription = (rating: number) => {
     if (FilmRatingCheck.isAwesome(rating)) {return FilmRating.Awesome;}
@@ -42,7 +44,7 @@ function FilmOverviewSection(): JSX.Element | null {
   return (film === null) ? null : (
     <>
       <div className="film-rating">
-        <div className="film-rating__score">{film.rating.toLocaleString('ru')}</div>
+        <div className="film-rating__score">{convertNumToFormatedString(film.rating)}</div>
         <p className="film-rating__meta">
           <span className="film-rating__level">{getRatingDescription(film.rating)}</span>
           <span className="film-rating__count">

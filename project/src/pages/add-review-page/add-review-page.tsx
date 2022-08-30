@@ -5,9 +5,11 @@ import ReviewForm from '../../components/review-form/review-form';
 import UserBlock from '../../components/user-block/user-block';
 import { useAppSelector } from '../../hooks';
 import NotFoundPage from '../not-found-page/not-found-page';
+import { LogoState } from '../../util/const';
+import { getFilm } from '../../store/film-process/selector';
 
 function AddReviewPage(): JSX.Element {
-  const film = useAppSelector((state) => state.film);
+  const film = useAppSelector(getFilm);
 
   if (!film){
     return (
@@ -24,7 +26,7 @@ function AddReviewPage(): JSX.Element {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header">
-          <Logo />
+          <Logo renderPlace={LogoState.Header} />
           <Breadcrumbs />
           <UserBlock />
         </header>

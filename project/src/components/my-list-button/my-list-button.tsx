@@ -1,44 +1,43 @@
+import React, { useEffect } from 'react';
 import { useAppSelector } from '../../hooks';
-import { store } from '../../store';
+import { useAppDispatch } from '../../hooks';
 import { fetchFavoriteFilmsAction, fetchFilmAction, fetchPromoFilmAction, setFilmFavoriteAction } from '../../store/api-actions';
+import { getFavoriteFilms } from '../../store/favorite-process/selector';
+import { getFilm, getFilmFavoriteStatus } from '../../store/film-process/selector';
+import { getAuthorizationStatus } from '../../store/user-process/selector';
 import { FavoriteData } from '../../types/favorite-data';
 import { AppRoute, AuthorizationStatus } from '../../util/const';
-import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const MyListButton = (): JSX.Element | null => {
-  const location = useLocation();
-  const promoFieldName = 'promo';
-  const filmFieldName = 'film';
-  const filmStoreFieldName = (location.pathname === AppRoute.Root)
-    ? promoFieldName
-    : filmFieldName;
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const film = useAppSelector((state) => state[filmStoreFieldName]);
-  const favoriteFilms = useAppSelector((state) => state.favoriteFilms);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isUnauthorised = authorizationStatus !== AuthorizationStatus.Auth;
-  if (isUnauthorised) {
-    return null;
-  }
+  const film = useAppSelector(getFilm);
+  const filmIsFavorite = useAppSelector(getFilmFavoriteStatus);
+  const favoriteFilms = useAppSelector(getFavoriteFilms);
 
-  const favoriteFilmsCount = (favoriteFilms === null) ? 0 : favoriteFilms.length;
+  const favoriteFilmsCount = (isUnauthorised) ? 0 : favoriteFilms?.length;
+  const isInFilmList = film?.isFavorite && !isUnauthorised;
+
+  useEffect(() => {
+    dispatch(fetchFavoriteFilmsAction());
+  }, [filmIsFavorite, dispatch]);
 
   const onMyListButtonClickHandler = () => {
+    if (isUnauthorised) {
+      navigate(AppRoute.Login);
+    }
     if (film !== null) {
       const favoriteData: FavoriteData = {
         filmId: String(film.id),
         status: Number(!film.isFavorite),
       };
-      store.dispatch(setFilmFavoriteAction(favoriteData));
-      store.dispatch(fetchFavoriteFilmsAction());
-      switch (filmStoreFieldName) {
-        case promoFieldName:
-          store.dispatch(fetchPromoFilmAction());
-          break;
-        case filmFieldName:
-          store.dispatch(fetchFilmAction(String(film.id)));
-          break;
-      }
+      dispatch(setFilmFavoriteAction(favoriteData));
+      dispatch(fetchPromoFilmAction());
+      dispatch(fetchFilmAction(String(film.id)));
     }
   };
 
@@ -52,17 +51,13 @@ const MyListButton = (): JSX.Element | null => {
       <use xlinkHref="#add"></use>
     </svg>);
 
-  if (authorizationStatus !== AuthorizationStatus.Auth) {
-    return null;
-  }
-
   return (
     <button onClick={onMyListButtonClickHandler} className="btn btn--list film-card__button">
-      {(film?.isFavorite) ? <InListMarker /> : <PlusMarker />}
+      {(isInFilmList) ? <InListMarker /> : <PlusMarker />}
       <span>My list</span>
       <span className="film-card__count">{favoriteFilmsCount}</span>
     </button>
   );
 };
 
-export default MyListButton;
+export default React.memo(MyListButton);

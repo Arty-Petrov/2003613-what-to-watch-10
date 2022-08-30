@@ -14,18 +14,18 @@ export const GenreButtonName: {[index: string]:string} = {
 } as const;
 
 
-export const Genre: {[index: string]:string} = {
-  AllGenres: 'All',
-  Comedy: 'Comedy',
-  Crime: 'Crime',
-  Documentary: 'Documentary',
-  Drama: 'Drama',
-  Horror: 'Horror',
-  Adventure: 'Adventure',
-  Romance: 'Romance',
-  Scifi: 'Scifi',
-  Thriller: 'Thriller',
-} as const;
+export enum Genre {
+  AllGenres = 'All',
+  Comedy = 'Comedy',
+  Crime = 'Crime',
+  Documentary = 'Documentary',
+  Drama = 'Drama',
+  Horror = 'Horror',
+  Adventure = 'Adventure',
+  Romance = 'Romance',
+  Scifi = 'Scifi',
+  Thriller = 'Thriller',
+}
 
 export enum AppRoute {
   Root = '/',
@@ -100,21 +100,19 @@ export enum APIRoute {
   Logout = '/logout',
 }
 
-// export const LogoState = {
-//   mainPageHead: {
-//     logoStyle: '',
-//     logoLink: '',
-//   },
-//   mainPageFooter: {
-//     logoStyle: 'logo__link--light',
-//     logoLink: '',
-//   },
-//   otherPageHead: {
-//     logoStyle: '',
-//     logoLink: '/',
-//   },
-//   otherPageFooter:{
-//     logoStyle: 'logo__link--light',
-//     logoLink: '/',
-//   },
-// };
+export enum NameSpace {
+  Favorite = 'FAVORITE',
+  Films = 'FILMS',
+  Film = 'FILM',
+  User = 'USER',
+}
+
+export enum LogoState {
+  Header = 'header',
+  Footer = 'footer',
+}
+
+export enum DateFormat {
+  MonthDayYear = 'MMMM DD, YYYY',
+  YearDayMonth = 'YYYY-DD-MM',
+}

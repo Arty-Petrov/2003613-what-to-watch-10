@@ -1,9 +1,11 @@
+import React from 'react';
+import { LogoState } from '../../util/const';
 import Logo from '../logo/logo';
 
 function Footer(): JSX.Element {
   return (
     <footer className="page-footer">
-      <Logo />
+      <Logo renderPlace={LogoState.Footer}/>
       <div className="copyright">
         <p>© 2019 What to watch Ltd.</p>
       </div>
@@ -11,4 +13,4 @@ function Footer(): JSX.Element {
   );
 }
 
-export default Footer;
+export default React.memo(Footer);

@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { addFilmCommentAction } from '../../store/api-actions';
@@ -7,26 +7,25 @@ import ReviewFormStar from '../review-form-star/review-form-star';
 
 function ReviewForm(): JSX.Element {
   const {id} = useParams();
+  const textFieldRef = useRef('');
+  const starsFieldRef = useRef('');
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const [formData, setFormData] = useState({
-    commentText: '',
-    rating: null,
-  });
+
+  const fieldChangeHandler = (evt: ChangeEvent<HTMLTextAreaElement>) => {
+    const {value} = (evt.target);
+    textFieldRef.current = value;
+  };
 
   const starsButtonList = Array.from({length: 10}, (_, i) => {
     const index = String(10 - i);
     return <ReviewFormStar index={index} key={index}/>;
   });
 
-  const fieldChangeHandler = (evt: ChangeEvent<HTMLTextAreaElement>) => {
-    const {name, value} = (evt.target);
-    setFormData({...formData, [name]: value});
-  };
 
   const ratingInputClickHandler = (evt: ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = (evt.target);
-    setFormData({...formData, [name]: value});
+    const {value} = (evt.target);
+    starsFieldRef.current = value;
   };
 
   const onSubmitHandler = (commentData: CommentData) => {
@@ -35,12 +34,11 @@ function ReviewForm(): JSX.Element {
 
   const formSubmitHandler = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    const {commentText, rating} = formData;
-    if (commentText !== null) {
+    if (textFieldRef.current !== null) {
       onSubmitHandler({
         filmId: String(id),
-        comment: commentText,
-        rating: Number(rating),
+        comment: textFieldRef.current,
+        rating: Number(starsFieldRef.current),
       });
     }
   };

@@ -1,29 +1,23 @@
 import { useEffect, useRef } from 'react';
 import { Film } from '../../types/film';
 
+const PLAY_DELAY = 1000;
 
 type VideoPlayerProps = {
   film: Film,
-  settings: {
-    isPlaying: boolean;
-    isMuted: boolean;
-  }
 }
-// Если быстро перенести курсор с одного элемента на другой, то видео проигрывается в обоих карточках
 
-function VideoPlayer ({film, settings}:VideoPlayerProps): JSX.Element { //settings
-  const {isPlaying} = settings;
+function VideoPlayer ({film}:VideoPlayerProps): JSX.Element {
 
   const videoSrc = film.previewVideoLink;
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
-    if (isPlaying && videoRef.current !== null) {
-      videoRef.current.play();
-      return;
-    }
-    videoRef?.current?.pause();
-  }, [isPlaying]);
+    const playVideo = setTimeout(
+      () => videoRef.current && videoRef.current.play(),
+      PLAY_DELAY);
+    return () => clearTimeout(playVideo);
+  });
 
   return (
     <video

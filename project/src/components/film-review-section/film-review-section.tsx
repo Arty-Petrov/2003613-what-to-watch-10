@@ -1,6 +1,7 @@
 import { useAppSelector } from '../../hooks';
 import { Comments } from '../../types/comment';
 import FilmReviewComment from '../film-review-comment/film-review-comment';
+import { getFilmComments } from '../../store/film-process/selector';
 
 const orderReviewCommentsInCollumns = (filmComments: Comments): JSX.Element => {
   let arrayMiddleIndex = 3;
@@ -39,11 +40,13 @@ const orderReviewCommentsInCollumns = (filmComments: Comments): JSX.Element => {
 };
 
 function FilmReviewSection(): JSX.Element {
-  const comments = useAppSelector((state) => state.comments);
+  const comments = useAppSelector(getFilmComments);
+  // eslint-disable-next-line no-console
+  console.log('FilmReviewSection', comments);
 
   return (
     <div className="film-card__reviews film-card__row">
-      {orderReviewCommentsInCollumns(comments)}
+      {(comments === null) ? null : orderReviewCommentsInCollumns(comments)}
     </div>
   );
 }
