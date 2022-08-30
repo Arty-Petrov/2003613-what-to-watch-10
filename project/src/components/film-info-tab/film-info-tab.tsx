@@ -12,13 +12,10 @@ function FilmInfoTab(): JSX.Element{
     switch (activeSectionType) {
       case FilmInfoSection.Details:
         return <FilmDetailsSection />;
-        break;
       case FilmInfoSection.Reviews:
         return <FilmReviewSection />;
-        break;
       default:
         return <FilmOverviewSection />;
-        break;
     }
   };
 

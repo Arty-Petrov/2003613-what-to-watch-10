@@ -9,7 +9,7 @@ import ReviewButton from '../../components/review-button/review-button';
 import SomeComp from '../../components/some-comp/some-comp';
 import UserBlock from '../../components/user-block/user-block';
 import { useAppSelector } from '../../hooks';
-import { useAppDispatch } from '../../hooks/index';
+import { useAppDispatch } from '../../hooks';
 import { fetchFilmAction, fetchFilmCommentsAction, fetchSimilarFilmsAction } from '../../store/api-actions';
 import { AppRoute, FilmsCatalogState, LogoState } from '../../util/const';
 import { getFilm, getSimilarFilms } from '../../store/film-process/selector';

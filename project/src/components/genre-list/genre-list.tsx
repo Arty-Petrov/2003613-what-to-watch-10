@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from '../../hooks/index';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { resetFilmsCount, setActiveGenre } from '../../store/films-process/films-process';
 import { getFilms, getGetActiveGenre } from '../../store/films-process/selector';
 import { Genre } from '../../util/const';

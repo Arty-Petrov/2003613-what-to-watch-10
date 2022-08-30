@@ -1,7 +1,7 @@
 import { useAppSelector } from '../../hooks';
 import { Comments } from '../../types/comment';
 import FilmReviewComment from '../film-review-comment/film-review-comment';
-import { getfilmComments } from '../../store/film-process/selector';
+import { getFilmComments } from '../../store/film-process/selector';
 
 const orderReviewCommentsInCollumns = (filmComments: Comments): JSX.Element => {
   let arrayMiddleIndex = 3;
@@ -40,7 +40,7 @@ const orderReviewCommentsInCollumns = (filmComments: Comments): JSX.Element => {
 };
 
 function FilmReviewSection(): JSX.Element {
-  const comments = useAppSelector(getfilmComments);
+  const comments = useAppSelector(getFilmComments);
   // eslint-disable-next-line no-console
   console.log('FilmReviewSection', comments);
 

@@ -2,7 +2,7 @@ import { useAppSelector } from '../../hooks';
 import { getFilm } from '../../store/film-process/selector';
 import NotFoundPage from '../not-found-page/not-found-page';
 import { useEffect } from 'react';
-import { useAppDispatch } from '../../hooks/index';
+import { useAppDispatch } from '../../hooks';
 import { fetchFilmAction } from '../../store/api-actions';
 import { useParams } from 'react-router-dom';
 

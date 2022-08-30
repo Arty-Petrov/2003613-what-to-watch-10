@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useAppSelector } from '../../hooks';
-import { useAppDispatch } from '../../hooks/index';
+import { useAppDispatch } from '../../hooks';
 import { fetchFavoriteFilmsAction, fetchFilmAction, fetchPromoFilmAction, setFilmFavoriteAction } from '../../store/api-actions';
 import { getFavoriteFilms } from '../../store/favorite-process/selector';
 import { getFilm, getFilmFavoriteStatus } from '../../store/film-process/selector';
