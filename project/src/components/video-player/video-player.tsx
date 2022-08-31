@@ -1,34 +1,26 @@
-import { useEffect, useRef } from 'react';
+import React from 'react';
 import { Film } from '../../types/film';
 
-const PLAY_DELAY = 1000;
+const VIDEO_PLAYER_DISPLAY_NAME = 'Video Player';
 
 type VideoPlayerProps = {
   film: Film,
+  isPreviewPlayer?: boolean;
+  handleProgressUpdate?: () => void;
 }
 
-function VideoPlayer ({film}:VideoPlayerProps): JSX.Element {
+const VideoPlayer = React.forwardRef<HTMLVideoElement, VideoPlayerProps>((
+  {film, isPreviewPlayer, handleProgressUpdate}: VideoPlayerProps, ref) => (
+  <video
+    src={isPreviewPlayer
+      ? film.previewVideoLink
+      : film.videoLink}
+    ref={ref}
+    className="player__video"
+    poster={film.previewImage}
+    onTimeUpdate={handleProgressUpdate}
+  />
+));
+VideoPlayer.displayName = VIDEO_PLAYER_DISPLAY_NAME;
 
-  const videoSrc = film.previewVideoLink;
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-
-  useEffect(() => {
-    const playVideo = setTimeout(
-      () => videoRef.current && videoRef.current.play(),
-      PLAY_DELAY);
-    return () => clearTimeout(playVideo);
-  });
-
-  return (
-    <video
-      src={videoSrc}
-      ref={videoRef}
-      poster={film.previewImage}
-      muted
-      width="280"
-      height="175"
-    />
-  );
-}
-
-export default VideoPlayer;
+export default React.memo(VideoPlayer);

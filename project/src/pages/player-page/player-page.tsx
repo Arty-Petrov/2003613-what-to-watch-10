@@ -1,16 +1,33 @@
-import { useAppSelector } from '../../hooks';
-import { getFilm } from '../../store/film-process/selector';
-import NotFoundPage from '../not-found-page/not-found-page';
 import { useEffect } from 'react';
-import { useAppDispatch } from '../../hooks';
-import { fetchFilmAction } from '../../store/api-actions';
+import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import { useParams } from 'react-router-dom';
+import VideoPlayerExitButton from '../../components/video-player-exit-button/video-player-exit-button';
+import VideoPlayerPlaybackToggleButton from '../../components/video-player-playback-toggle-button/video-player-playback-toggle-button';
+import VideoPlayerTimeBarToggler from '../../components/video-player-time-bar-toggler/video-player-time-bar-toggler';
+import VideoPlayerTimeBar from '../../components/video-player-time-bar/video-player-time-bar';
+import VideoPlayerTimer from '../../components/video-player-timer/video-player-timer';
+import VideoPlayer from '../../components/video-player/video-player';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import useVideoPlayer from '../../hooks/use-video-player/useVideoPlayer';
+import { fetchFilmAction } from '../../store/api-actions';
+import { getDataLoadingStatus, getFilm } from '../../store/film-process/selector';
+import LoadingScreen from '../loading-screen/loading-screen';
+import NotFoundPage from '../not-found-page/not-found-page';
 
 
 function PlayerPage (): JSX.Element {
   const {id} = useParams();
   const dispatch = useAppDispatch();
   const film = useAppSelector(getFilm);
+  const isDataLoading = useAppSelector(getDataLoadingStatus);
+  const {
+    videoRef,
+    playerState,
+    handlePlayButtonToggle,
+    handleProgressUpdate,
+  } = useVideoPlayer();
+
+  const handleFullScreenAction = useFullScreenHandle();
 
   useEffect(() => {
     if (Number(id) !== film?.id) {
@@ -19,48 +36,48 @@ function PlayerPage (): JSX.Element {
   }, [dispatch, film?.id, id]
   );
 
-  const divStyle = {left: '30%'};
-
   if (!film){
     return (
       <NotFoundPage />
     );
   }
 
-  return (
-    <div className="player">
-      <video src="#" className="player__video" poster={film.backgroundImage}></video>
+  return !film || isDataLoading
+    ? <LoadingScreen />
+    : (
+      <FullScreen handle={handleFullScreenAction}>
+        <div className="player">
+          <VideoPlayer
+            ref={videoRef}
+            {...{film, handleProgressUpdate}}
+          />
 
-      <button type="button" className="player__exit">Exit</button>
+          <VideoPlayerExitButton id={film?.id}/>
 
-      <div className="player__controls">
-        <div className="player__controls-row">
-          <div className="player__time">
-            <progress className="player__progress" value="30" max="100"></progress>
-            <div className="player__toggler" style={divStyle}>Toggler</div>
+          <div className="player__controls">
+            <div className="player__controls-row">
+              <div className="player__time">
+                <VideoPlayerTimeBar {...playerState} />
+                <VideoPlayerTimeBarToggler {...playerState} />
+              </div>
+              <VideoPlayerTimer {...playerState} />
+            </div>
+
+            <div className="player__controls-row">
+              <VideoPlayerPlaybackToggleButton {...playerState} handlePlayButtonToggle={handlePlayButtonToggle} />
+              <div className="player__name">{film?.name}</div>
+
+              <button type="button" className="player__full-screen" onClick={handleFullScreenAction.enter}>
+                <svg viewBox="0 0 27 27" width="27" height="27">
+                  <use xlinkHref="#full-screen"></use>
+                </svg>
+                <span>Full screen</span>
+              </button>
+            </div>
           </div>
-          <div className="player__time-value">{film.runTime}</div>
         </div>
-
-        <div className="player__controls-row">
-          <button type="button" className="player__play">
-            <svg viewBox="0 0 19 19" width="19" height="19">
-              <use xlinkHref="#play-s"></use>
-            </svg>
-            <span>Play</span>
-          </button>
-          <div className="player__name">Transpotting</div>
-
-          <button type="button" className="player__full-screen">
-            <svg viewBox="0 0 27 27" width="27" height="27">
-              <use xlinkHref="#full-screen"></use>
-            </svg>
-            <span>Full screen</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  );
+      </FullScreen>
+    );
 }
 
 export default PlayerPage;
