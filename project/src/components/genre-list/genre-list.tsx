@@ -1,3 +1,4 @@
+import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { resetFilmsCount, setActiveGenre } from '../../store/films-process/films-process';
 import { getFilms, getGetActiveGenre } from '../../store/films-process/selector';
@@ -35,4 +36,4 @@ function GenreList(): JSX.Element {
 
 }
 
-export default GenreList;
+export default React.memo(GenreList);

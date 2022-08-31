@@ -1,4 +1,5 @@
 export const FILM_COUNT_STEP = 8;
+export const TIMEOUT_DISPLAY_ERROR = 2000;
 
 export const GenreButtonName: {[index: string]:string} = {
   All: 'All genres',
@@ -115,4 +116,10 @@ export enum LogoState {
 export enum DateFormat {
   MonthDayYear = 'MMMM DD, YYYY',
   YearDayMonth = 'YYYY-DD-MM',
+}
+
+export enum ErrorMessages {
+  EmptyEmail = 'email',
+  EmptyPassword = 'password',
+  FalseLoginCombination = 'login',
 }
