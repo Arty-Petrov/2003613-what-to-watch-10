@@ -9,6 +9,7 @@ export type AppDispatch = typeof store.dispatch;
 
 export type UserProcess = {
   authorizationStatus: AuthorizationStatus,
+  error: boolean | null,
   userAvatar: string,
   name: string,
 };

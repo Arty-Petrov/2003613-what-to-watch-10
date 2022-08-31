@@ -2,17 +2,17 @@ import { Route, Routes } from 'react-router-dom';
 import browserHistory from '../../browser-history';
 import { useAppSelector } from '../../hooks';
 import AddReviewPage from '../../pages/add-review-page/add-review-page';
-import CatalogPage from '../../pages/catalog/catalog-page';
-import FilmPage from '../../pages/film/film-page';
+import CatalogPage from '../../pages/catalog-page/catalog-page';
+import FilmPage from '../../pages/film-page/film-page';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
-import LoginPage from '../../pages/login/login-page';
-import MyListPage from '../../pages/my-list/my-list-page';
+import LoginPage from '../../pages/login-page/login-page';
+import MyListPage from '../../pages/my-list-page/my-list-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
-import PlayerPage from '../../pages/player/player-page';
+import PlayerPage from '../../pages/player-page/player-page';
+import { getDataLoadingStatus } from '../../store/films-process/selector';
 import { AppRoute } from '../../util/const';
 import HistoryRoute from '../history-route/history-route';
 import PrivateRoute from '../private-route/private-route';
-import { getDataLoadingStatus } from '../../store/films-process/selector';
 
 function App(): JSX.Element {
   const loadingStatus = useAppSelector(getDataLoadingStatus);

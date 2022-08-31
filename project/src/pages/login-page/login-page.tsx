@@ -1,20 +1,25 @@
-import { FormEvent, useEffect, useRef } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import Footer from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { loginAction } from '../../store/api-actions';
+import { fetchFavoriteFilmsAction, loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
-import { AppRoute, AuthorizationStatus, LogoState } from '../../util/const';
-import { getAuthorizationStatus } from '../../store/user-process/selector';
+import { AppRoute, AuthorizationStatus, ErrorMessages, LogoState } from '../../util/const';
+import { getAuthorizationStatus, getError } from '../../store/user-process/selector';
 import { useNavigate } from 'react-router-dom';
+import { errorCleanupHandler } from '../../services/error-cleanup-handler';
+import LoginFormErrorMessage from '../../components/login-form-error-message/login-form-error-message';
+import { setError } from '../../store/user-process/user-process';
 
 function LoginPage(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const error = useAppSelector(getError);
+  const [errorType, setErrorType] = useState(ErrorMessages.FalseLoginCombination);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
-  const dispatch = useAppDispatch();
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
@@ -22,11 +27,24 @@ function LoginPage(): JSX.Element {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    if (loginRef.current !== null && passwordRef.current !== null) {
-      onSubmit({
-        login: loginRef.current.value,
-        password: passwordRef.current.value,
-      });
+    const login = loginRef.current ? loginRef.current.value : '';
+    const password = passwordRef.current ? passwordRef.current.value : '';
+    switch (true) {
+      case !login.length:
+        setErrorType(ErrorMessages.EmptyEmail);
+        dispatch(setError(true));
+        break;
+      case !password.length:
+        setErrorType(ErrorMessages.EmptyPassword);
+        dispatch(setError(true));
+        break;
+      default:
+        onSubmit({
+          login: login,
+          password: password,
+        });
+        dispatch(fetchFavoriteFilmsAction());
+        break;
     }
   };
 
@@ -34,7 +52,10 @@ function LoginPage(): JSX.Element {
     if (authorizationStatus === AuthorizationStatus.Auth) {
       navigate(AppRoute.Root);
     }
-  }, [authorizationStatus, navigate]);
+    if (error) {
+      errorCleanupHandler();
+    }
+  }, [error, authorizationStatus, navigate]);
 
   return (
     <div className="user-page">
@@ -49,6 +70,7 @@ function LoginPage(): JSX.Element {
           className="sign-in__form"
           onSubmit={handleSubmit}
         >
+          {error ? <LoginFormErrorMessage errorType={errorType} /> : null}
           <div className="sign-in__fields">
             <div className="sign-in__field">
               <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>

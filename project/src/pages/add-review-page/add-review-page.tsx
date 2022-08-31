@@ -1,4 +1,3 @@
-// import { useParams } from 'react-router-dom';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Logo from '../../components/logo/logo';
 import ReviewForm from '../../components/review-form/review-form';

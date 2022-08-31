@@ -6,13 +6,11 @@ import Logo from '../../components/logo/logo';
 import MyListButton from '../../components/my-list-button/my-list-button';
 import PlayButton from '../../components/play-button/play-button';
 import ReviewButton from '../../components/review-button/review-button';
-import SomeComp from '../../components/some-comp/some-comp';
 import UserBlock from '../../components/user-block/user-block';
-import { useAppSelector } from '../../hooks';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchFilmAction, fetchFilmCommentsAction, fetchSimilarFilmsAction } from '../../store/api-actions';
-import { AppRoute, FilmsCatalogState, LogoState } from '../../util/const';
 import { getFilm, getSimilarFilms } from '../../store/film-process/selector';
+import { AppRoute, FilmsCatalogState, LogoState } from '../../util/const';
 
 
 function FilmPage(): JSX.Element {
@@ -39,7 +37,6 @@ function FilmPage(): JSX.Element {
 
   return (
     <>
-      <SomeComp addElement={false}/>
       <section className="film-card film-card--full" style={style}>
         <div className="film-card__hero">
           <div className="film-card__bg">

@@ -4,9 +4,11 @@ import { getName } from '../../services/name';
 import { UserProcess } from '../../types/state';
 import { AuthorizationStatus, NameSpace } from '../../util/const';
 import { checkAuthAction, loginAction, logoutAction } from '../api-actions';
+import { toast } from 'react-toastify';
 
 const initialState: UserProcess = {
   authorizationStatus: AuthorizationStatus.Unknown,
+  error: null,
   userAvatar: '',
   name: '',
 };
@@ -14,7 +16,11 @@ const initialState: UserProcess = {
 export const userProcess = createSlice({
   name: NameSpace.User,
   initialState,
-  reducers: {},
+  reducers: {
+    setError: (state, { payload }) => {
+      state.error = payload;
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(checkAuthAction.fulfilled, (state) => {
@@ -24,6 +30,7 @@ export const userProcess = createSlice({
       })
       .addCase(checkAuthAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
+        toast.warn('We can\'t recognize this email and password combination. Please try again. Please try again later.');
       })
       .addCase(loginAction.fulfilled, (state, { payload }) => {
         state.authorizationStatus = AuthorizationStatus.Auth;
@@ -32,6 +39,7 @@ export const userProcess = createSlice({
       })
       .addCase(loginAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
+        state.error = true;
       })
       .addCase(logoutAction.fulfilled, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
@@ -40,3 +48,5 @@ export const userProcess = createSlice({
       });
   }
 });
+
+export const { setError } = userProcess.actions;

@@ -41,8 +41,6 @@ const orderReviewCommentsInCollumns = (filmComments: Comments): JSX.Element => {
 
 function FilmReviewSection(): JSX.Element {
   const comments = useAppSelector(getFilmComments);
-  // eslint-disable-next-line no-console
-  console.log('FilmReviewSection', comments);
 
   return (
     <div className="film-card__reviews film-card__row">

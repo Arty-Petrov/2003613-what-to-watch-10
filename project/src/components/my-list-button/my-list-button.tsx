@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
-import { useAppSelector } from '../../hooks';
-import { useAppDispatch } from '../../hooks';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchFavoriteFilmsAction, fetchFilmAction, fetchPromoFilmAction, setFilmFavoriteAction } from '../../store/api-actions';
 import { getFavoriteFilms } from '../../store/favorite-process/selector';
 import { getFilm, getFilmFavoriteStatus } from '../../store/film-process/selector';
 import { getAuthorizationStatus } from '../../store/user-process/selector';
 import { FavoriteData } from '../../types/favorite-data';
 import { AppRoute, AuthorizationStatus } from '../../util/const';
-import { useNavigate } from 'react-router-dom';
 
 const MyListButton = (): JSX.Element | null => {
   const dispatch = useAppDispatch();
