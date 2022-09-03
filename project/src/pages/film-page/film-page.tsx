@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import FilmInfoTab from '../../components/film-info-tab/film-info-tab';
 import FilmsList from '../../components/films-list/films-list';
 import Logo from '../../components/logo/logo';
@@ -9,18 +9,19 @@ import ReviewButton from '../../components/review-button/review-button';
 import UserBlock from '../../components/user-block/user-block';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchFilmAction, fetchFilmCommentsAction, fetchSimilarFilmsAction } from '../../store/api-actions';
-import { getFilm, getSimilarFilms } from '../../store/film-process/selector';
-import { AppRoute, FilmsCatalogState, LogoState } from '../../util/const';
+import {getDataLoadingStatus, getFilm, getSimilarFilms} from '../../store/film-process/selector';
+import { FilmsCatalogState, LogoState } from '../../util/const';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 
 function FilmPage(): JSX.Element {
   const {id} = useParams();
   const dispatch = useAppDispatch();
   const film = useAppSelector(getFilm);
+  const isDataLoading = useAppSelector(getDataLoadingStatus);
   const similarFilms = useAppSelector(getSimilarFilms);
-  const navigate = useNavigate();
   const style = {
-    backgroundColor: `${film?.backgroundColor}`
+    backgroundColor: `${film?.backgroundColor}`,
   };
 
   useEffect(() => {
@@ -31,8 +32,10 @@ function FilmPage(): JSX.Element {
     }
   }, [dispatch, id, film]);
 
-  if (film === undefined){
-    navigate(AppRoute.NotFound);
+  if (isDataLoading) {
+    return (
+      <LoadingScreen />
+    );
   }
 
   return (

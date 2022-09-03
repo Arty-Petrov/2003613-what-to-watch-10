@@ -1,14 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { FilmProcess } from '../../types/state';
-import { NameSpace } from '../../util/const';
-import { addFilmCommentAction, fetchFilmAction, fetchFilmCommentsAction, fetchPromoFilmAction, fetchSimilarFilmsAction, setFilmFavoriteAction } from '../api-actions';
+import {createSlice} from '@reduxjs/toolkit';
+import {FilmProcess} from '../../types/state';
+import {NameSpace} from '../../util/const';
+import {fetchFilmAction, fetchPromoFilmAction, fetchSimilarFilmsAction, setFilmFavoriteAction} from '../api-actions';
 
 const initialState: FilmProcess = {
   film: null,
   promoFilm: null,
   similarFilms: null,
-  filmComments: [],
   isDataLoading: false,
+  error: null,
 };
 
 export const filmProcess = createSlice({
@@ -35,6 +35,7 @@ export const filmProcess = createSlice({
         state.isDataLoading = true;
       })
       .addCase(fetchFilmAction.rejected, (state) => {
+        state.error = true;
         state.isDataLoading = false;
       })
       .addCase(fetchFilmAction.fulfilled, (state, {payload}) => {
@@ -51,16 +52,6 @@ export const filmProcess = createSlice({
         state.similarFilms = payload;
         state.isDataLoading = false;
       })
-      .addCase(fetchFilmCommentsAction.pending, (state) => {
-        state.isDataLoading = true;
-      })
-      .addCase(fetchFilmCommentsAction.rejected, (state) => {
-        state.isDataLoading = false;
-      })
-      .addCase(fetchFilmCommentsAction.fulfilled, (state, {payload}) => {
-        state.filmComments = payload;
-        state.isDataLoading = false;
-      })
       .addCase(setFilmFavoriteAction.pending, (state) => {
         state.isDataLoading = true;
       })
@@ -69,16 +60,6 @@ export const filmProcess = createSlice({
       })
       .addCase(setFilmFavoriteAction.fulfilled, (state, {payload}) => {
         state.film = payload;
-        state.isDataLoading = false;
-      })
-      .addCase(addFilmCommentAction.pending, (state) => {
-        state.isDataLoading = true;
-      })
-      .addCase(addFilmCommentAction.rejected, (state) => {
-        state.isDataLoading = false;
-      })
-      .addCase(addFilmCommentAction.fulfilled, (state, {payload}) => {
-        state.filmComments = payload;
         state.isDataLoading = false;
       });
   }

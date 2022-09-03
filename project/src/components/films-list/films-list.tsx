@@ -5,7 +5,7 @@ import GenreList from '../genre-list/genre-list';
 import ShowMoreButton from '../show-more-button/show-more-button';
 
 type FilmsListProps = {
-  films: Films | null;
+  films: Films | null | undefined;
   state: {
     headText: string,
     headStyle: string,

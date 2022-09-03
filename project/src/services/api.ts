@@ -1,15 +1,9 @@
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { StatusCodes } from 'http-status-codes';
-import { toast } from 'react-toastify';
-import { getToken } from './token';
-
-const StatusCodeMapping: Record<number, boolean> = {
-  [StatusCodes.BAD_REQUEST]: true,
-  [StatusCodes.UNAUTHORIZED]: true,
-  [StatusCodes.NOT_FOUND]: true
-};
-
-const shouldDisplayError = (response: AxiosResponse) => !!StatusCodeMapping[response.status];
+import axios, {AxiosError, AxiosInstance, AxiosRequestConfig} from 'axios';
+import {StatusCodes} from 'http-status-codes';
+import {getToken} from './token';
+import {redirectToRouteAction} from '../store/action';
+import {store} from '../store';
+import {AppRoute} from '../util/const';
 
 const BACKEND_URL = 'https://10.react.pages.academy/wtw';
 const REQUEST_TIMEOUT = 5000;
@@ -35,8 +29,8 @@ export const createAPI = (): AxiosInstance => {
   api.interceptors.response.use(
     (response) => response,
     (error: AxiosError) => {
-      if (error.response && shouldDisplayError(error.response)) {
-        toast.warn(error.response.data.error);
+      if (error.response?.status === StatusCodes.NOT_FOUND) {
+        store.dispatch(redirectToRouteAction(AppRoute.NotFound));
       }
 
       throw error;
@@ -45,4 +39,3 @@ export const createAPI = (): AxiosInstance => {
 
   return api;
 };
-

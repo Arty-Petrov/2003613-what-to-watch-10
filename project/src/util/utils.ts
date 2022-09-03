@@ -11,5 +11,7 @@ export const convertMinutesToHM = (minutes: number): string =>
 
 export const convertUtcToDateFormat = (date: string, format: string) => dayjs(date).format(format);
 
-export const convertNumToFormatedString = (number: number): string => number.toLocaleString('ru-RU', {minimumFractionDigits:1, maximumFractionDigits:1});
+export const convertNumToFormatedString = (number: number): string =>
+  number.toLocaleString('ru-RU',
+    {minimumFractionDigits:1, maximumFractionDigits:1});
 

@@ -11,7 +11,7 @@ function GenreList(): JSX.Element {
   const films = useAppSelector(getFilms);
   const genres = (films !== null) ? Array.from(new Set([Genre.AllGenres, ...films.map((film) => film.genre)])) : [];
 
-  const onButtonClickHandler = (evt: React.MouseEvent) => {
+  const handleOnButtonClick = (evt: React.MouseEvent) => {
     const clickedGenre = evt.currentTarget.getAttribute('data-genre');
     if (clickedGenre !== null) {
       dispatch(setActiveGenre(clickedGenre));
@@ -24,7 +24,7 @@ function GenreList(): JSX.Element {
       key={genreName}
       genre={genreName}
       isActive={activeGenre === genreName as keyof typeof GenreButton}
-      onClick={onButtonClickHandler}
+      onClick={handleOnButtonClick}
     />
   ));
 

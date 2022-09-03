@@ -3,7 +3,7 @@ import Footer from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
 import UserBlock from '../../components/user-block/user-block';
 import { useAppSelector } from '../../hooks';
-import { getFavoriteFilms } from '../../store/favorite-process/selector';
+import { getFavoriteFilms } from '../../store/user-process/selector';
 import { FilmsCatalogState, LogoState } from '../../util/const';
 
 function MyListPage (): JSX.Element {

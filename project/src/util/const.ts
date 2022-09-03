@@ -41,7 +41,7 @@ export enum AppRoute {
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
-  Unknown = 'UNKNOW',
+  Unknown = 'UNKNOWN',
 }
 
 export enum FilmInfoSection {
@@ -102,9 +102,9 @@ export enum APIRoute {
 }
 
 export enum NameSpace {
-  Favorite = 'FAVORITE',
   Films = 'FILMS',
   Film = 'FILM',
+  Review = 'REVIEW',
   User = 'USER',
 }
 

@@ -1,11 +1,14 @@
-import { Comments } from '../../types/comment';
-import { Film, Films } from '../../types/film';
 import { State } from '../../types/state';
 import { NameSpace } from '../../util/const';
+import {createSelector} from 'reselect';
 
-export const getFilm = (state: State): Film | null => state[NameSpace.Film].film;
-export const getFilmFavoriteStatus = (state: State): boolean | undefined=> state[NameSpace.Film].film?.isFavorite;
-export const getPromoFilm = (state: State): Film | null => state[NameSpace.Film].promoFilm;
-export const getSimilarFilms = (state: State): Films | null => state[NameSpace.Film].similarFilms;
-export const getFilmComments = (state: State): Comments | null => state[NameSpace.Film].filmComments;
-export const getDataLoadingStatus = (state: State): boolean => state[NameSpace.Film].isDataLoading;
+
+export const getFilmState = (state: State) => state[NameSpace.Film];
+export const getFilm = createSelector(getFilmState, (state) => state.film);
+export const getFilmFavoriteStatus = createSelector(getFilmState, (state) => state.film?.isFavorite);
+export const getPromoFilm = createSelector(getFilmState, (state) => state.promoFilm);
+export const getSimilarFilms = createSelector(
+  [getFilmState, getFilm],
+  (state, film) => state.similarFilms?.filter((similar) => film?.id !== similar.id));
+
+export const getDataLoadingStatus = createSelector(getFilmState, (state) => state.isDataLoading);

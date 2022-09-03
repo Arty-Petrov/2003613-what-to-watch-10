@@ -12,6 +12,8 @@ export type UserProcess = {
   error: boolean | null,
   userAvatar: string,
   name: string,
+  favoriteFilms: Films | null,
+  isDataLoading: boolean,
 };
 
 export type FilmsProcess = {
@@ -21,15 +23,16 @@ export type FilmsProcess = {
   isDataLoading: boolean,
 };
 
-export type FavoriteProcess = {
-  favoriteFilms: Films | null,
-  isDataLoading: boolean,
-};
-
 export type FilmProcess = {
   film: Film | null,
   promoFilm: Film | null,
   similarFilms: Films | null,
+  isDataLoading: boolean,
+  error: boolean | null,
+};
+
+export type ReviewProcess = {
   filmComments: Comments,
+  isReviewSubmited: boolean,
   isDataLoading: boolean,
 };

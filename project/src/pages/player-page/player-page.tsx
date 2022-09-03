@@ -12,8 +12,6 @@ import useVideoPlayer from '../../hooks/use-video-player/useVideoPlayer';
 import { fetchFilmAction } from '../../store/api-actions';
 import { getDataLoadingStatus, getFilm } from '../../store/film-process/selector';
 import LoadingScreen from '../loading-screen/loading-screen';
-import NotFoundPage from '../not-found-page/not-found-page';
-
 
 function PlayerPage (): JSX.Element {
   const {id} = useParams();
@@ -36,48 +34,46 @@ function PlayerPage (): JSX.Element {
   }, [dispatch, film?.id, id]
   );
 
-  if (!film){
+  if (isDataLoading) {
     return (
-      <NotFoundPage />
+      <LoadingScreen />
     );
   }
 
-  return !film || isDataLoading
-    ? <LoadingScreen />
-    : (
-      <FullScreen handle={handleFullScreenAction}>
-        <div className="player">
-          <VideoPlayer
-            ref={videoRef}
-            {...{film, handleProgressUpdate}}
-          />
+  return (
+    <FullScreen handle={handleFullScreenAction}>
+      <div className="player">
+        <VideoPlayer
+          ref={videoRef}
+          {...{film, handleProgressUpdate}}
+        />
 
-          <VideoPlayerExitButton id={film?.id}/>
+        <VideoPlayerExitButton id={film?.id}/>
 
-          <div className="player__controls">
-            <div className="player__controls-row">
-              <div className="player__time">
-                <VideoPlayerTimeBar {...playerState} />
-                <VideoPlayerTimeBarToggler {...playerState} />
-              </div>
-              <VideoPlayerTimer {...playerState} />
+        <div className="player__controls">
+          <div className="player__controls-row">
+            <div className="player__time">
+              <VideoPlayerTimeBar {...playerState} />
+              <VideoPlayerTimeBarToggler {...playerState} />
             </div>
+            <VideoPlayerTimer {...playerState} />
+          </div>
 
-            <div className="player__controls-row">
-              <VideoPlayerPlaybackToggleButton {...playerState} handlePlayButtonToggle={handlePlayButtonToggle} />
-              <div className="player__name">{film?.name}</div>
+          <div className="player__controls-row">
+            <VideoPlayerPlaybackToggleButton {...playerState} handlePlayButtonToggle={handlePlayButtonToggle} />
+            <div className="player__name">{film?.name}</div>
 
-              <button type="button" className="player__full-screen" onClick={handleFullScreenAction.enter}>
-                <svg viewBox="0 0 27 27" width="27" height="27">
-                  <use xlinkHref="#full-screen"></use>
-                </svg>
-                <span>Full screen</span>
-              </button>
-            </div>
+            <button type="button" className="player__full-screen" onClick={handleFullScreenAction.enter}>
+              <svg viewBox="0 0 27 27" width="27" height="27">
+                <use xlinkHref="#full-screen"></use>
+              </svg>
+              <span>Full screen</span>
+            </button>
           </div>
         </div>
-      </FullScreen>
-    );
+      </div>
+    </FullScreen>
+  );
 }
 
 export default PlayerPage;

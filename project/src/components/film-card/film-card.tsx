@@ -15,7 +15,7 @@ function FilmCard({film, activeCardId, getActiveCardId}: FilmCardSmallProps): JS
   const isPlaying = film.id === activeCardId;
   const {videoRef, isPreviewPlayer} = useVideoPlayer();
 
-  const mouseEventHandler = (evt: MouseEvent <HTMLDivElement>) => {
+  const handleMouseEvent = (evt: MouseEvent <HTMLDivElement>) => {
     switch (evt.type) {
       case 'mouseenter':
         getActiveCardId(film.id);
@@ -28,8 +28,8 @@ function FilmCard({film, activeCardId, getActiveCardId}: FilmCardSmallProps): JS
 
   return (
     <article className="small-film-card catalog__films-card"
-      onMouseEnter={mouseEventHandler}
-      onMouseLeave={mouseEventHandler}
+      onMouseEnter={handleMouseEvent}
+      onMouseLeave={handleMouseEvent}
     >
       <Link to={`${AppRoute.Film}${film.id}`} className="small-film-card__link">
         <div className="small-film-card__image" data-id={film.id}>
